@@ -1,0 +1,26 @@
+@font-face {
+    font-family: 'Gabarito', sans-serif;
+    font-family: 'Rubik', sans-serif;
+    src: url(https://fonts.googleapis.com/css2?family=Gabarito&family=Rubik:wght@300&display=swap);
+}
+
+:root {
+    --sand: #FDB058;
+    --yellow: #FFBB1C;
+    --blue: #93D3DF;
+    --linen: #FDEFE4;
+    --wolf: #E0D3CC;
+}
+
+* {
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    background-image: url(./assets/fondo0.jpg);
+}
+
+.hide {
+    display: none;
+}
