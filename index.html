@@ -1,13 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>quiz2.0</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Gabarito&family=Rubik:wght@300&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Favicon -->
+    <link
+      rel="shortcut icon"
+      href="./assets/icons/favicon.png"
+      type="image/x-icon"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Quiz 2.0</h1>
+      <section id="icons">
+        <img src="./assets/mute.png" alt="Mute icon" id="mute"/><!-- Mute button -->
+        <img src="./assets/home.png" alt="Home icon" id="home"/><!-- Home button -->
+        <img src="./assets/login.png" alt="Login icon" id="loginTop" /><!-- //Login -->
+      </section>
+    </header>
+
+    <main id="home">
+      
+      <section id="info">
+        <h1>Welcome!</h1>
+        <p>Test your knowledge on this 10 history questions quiz!</p>
+        <p>Log in to get started!</p>
+      </section>
+
+      <section id="login">
+        <button id="loginButton">Log In</button>
+      </section>
+
+      <section id="ranking" style="display:none">
+        <table>
+          <caption>
+            Ranking
+          </caption>
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Test1</td>
+              <td>10</td>
+            </tr>
+            <tr>
+              <td>Test2</td>
+              <td>8</td>
+            </tr>
+            <tr>
+              <td>Test3</td>
+              <td>6</td>
+            </tr>
+            <tr>
+              <td>Test4</td>
+              <td>4</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+    <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
     <script src="./script.js"></script>
-</body>
+  </body>
 </html>
