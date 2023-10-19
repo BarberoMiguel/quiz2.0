@@ -11,40 +11,37 @@
     <link href="https://fonts.googleapis.com/css2?family=Gabarito&family=Rubik:wght@300&display=swap"
       rel="stylesheet"/>
     <!-- Favicon -->
-    <link rel="shortcut icon" href="./assets/icons/favicon.png" type="image/x-icon"/>
+    <link rel="shortcut icon" href="../assets/icons/favicon.png" type="image/x-icon"/>
 </head>
 <body>
-    <section id="ranking" style="display:none">
-        <table>
-          <caption>
-            Ranking
-          </caption>
-          <thead>
-            <tr>
-              <th>Username</th>
-              <th>Score</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Test1</td>
-              <td>10</td>
-            </tr>
-            <tr>
-              <td>Test2</td>
-              <td>8</td>
-            </tr>
-            <tr>
-              <td>Test3</td>
-              <td>6</td>
-            </tr>
-            <tr>
-              <td>Test4</td>
-              <td>4</td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
+  <header>
+    <h1>Quiz 2.0</h1>
+    <section id="icons">
+      <img src="../assets/mute.png" alt="Mute icon" id="mute"/><!-- Mute button -->
+      <img src="../assets/home.png" alt="Home icon" id="home"/><!-- Home button -->
+      <img src="../assets/login.png" alt="Login icon" id="loginTop" /><!-- //Login -->
+    </section>
+  </header>
+  <main>
+    <section id="ranking">
+      <table>
+        <caption>
+          Ranking
+        </caption>
+        <thead>
+          <tr>
+            <th id="rank">Ranking:</th>
+            <th id="user">Username:</th>
+            <th id="score">Score:</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        </tbody>
+      </table>
+    </section>
+  </main>
+  
 
       <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
