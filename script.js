@@ -1,3 +1,4 @@
+
 const firebaseConfig = {
   apiKey: "AIzaSyBI9SwSOMuFb1rO_tv7oaI26_TFJi8ugXo",
   authDomain: "quiz-f6e00.firebaseapp.com",
@@ -137,3 +138,9 @@ let loginPop = `<div id="loginPopUp">
 loginTopButton.addEventListener("click", () => {
   loginSection.innerHTML += loginPop;
 });
+
+async function getQuizQuestions() {
+    let questions = await fetch("https://opentdb.com/api.php?amount=10&category=23&difficulty=easy&type=multiple")
+    questions = await questions.json();
+    return questions;
+}   
