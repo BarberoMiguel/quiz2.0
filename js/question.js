@@ -1,7 +1,21 @@
+const firebaseConfig = {
+    apiKey: "AIzaSyBI9SwSOMuFb1rO_tv7oaI26_TFJi8ugXo",
+    authDomain: "quiz-f6e00.firebaseapp.com",
+    projectId: "quiz-f6e00",
+    storageBucket: "quiz-f6e00.appspot.com",
+    messagingSenderId: "172246500008",
+    appId: "1:172246500008:web:7f9cc8ba5f365d38ea389d"
+  };
+
+firebase.initializeApp(firebaseConfig);// Inicializaar app Firebase
+
+const db = firebase.firestore();// db representa mi BBDD //inicia Firestore
+
 let answers = [];
+let numberOfQuestions = 10;
 
 async function getQuizQuestions() {
-    let questions = await fetch("https://opentdb.com/api.php?amount=10&category=23&difficulty=easy&type=multiple")
+    let questions = await fetch(`https://opentdb.com/api.php?amount=${numberOfQuestions}&category=23&difficulty=easy&type=multiple`)
     questions = await questions.json();
     questions = questions.results;
     return questions;
@@ -16,7 +30,7 @@ function mezclarArray(array) {
 
 async function drawQuestions() {
     let questions = await getQuizQuestions();
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < numberOfQuestions; i++) {
         document.getElementById(`label${i+1}`).innerHTML = questions[i].question;
         let array = questions[i].incorrect_answers;
         array.push(questions[i].correct_answer);
@@ -28,6 +42,26 @@ async function drawQuestions() {
         }
     } 
 }
+
+//pintar los contenedores de las preguntas en el DOM
+let formulario = document.getElementById("formulario");
+for (let i = 1; i <= numberOfQuestions; i++) {
+    let section = `<section id="pregunta${i}" class="container hide">
+                        <h1 id="label${i}"></h1>
+                        <section class="labels">`;
+    for (let j = 1; j <= 4; j++) {
+        section += `<label for="${i}ans${j}" id="${i}ans0${j}" class="color${j}"></label>
+                    <input class="hide" type="radio" name="${i}ans" id="${i}ans${j}">`;
+    }
+    section += `</section>
+            </section>`;
+    formulario.innerHTML += section;
+}
+formulario.innerHTML += `<section class="hide container" id="pregunta${numberOfQuestions+1}">
+                            <h1>For submiting your answers you must answer all the questions:</h2>
+                            <button type="submit" class="navigation">Submit</button>
+                        </section>`;
+document.getElementById("pregunta1").classList.toggle("hide");
 
 //pintar las preguntas en el DOM
 drawQuestions();
@@ -41,15 +75,15 @@ next.addEventListener("click", function() {
     index += 1;
     document.getElementById(`pregunta${index-1}`).style.animation = "salirIzquierda 1s ease-in-out";
     setTimeout(function() {
-        document.getElementById(`pregunta${index}`).classList.toggle("hide");
-        document.getElementById(`pregunta${index-1}`).classList.toggle("hide");
+        document.getElementById(`pregunta${index-1}`).classList.add("hide");
         document.getElementById(`pregunta${index}`).style.animation = "entrarDerecha 1s ease-in-out";
+        document.getElementById(`pregunta${index}`).classList.remove("hide");
     }, 750);
     switch (index) {
         case 2: 
             previous.disabled = false;
             break;
-        case 11:
+        case numberOfQuestions +1:
             next.disabled = true;
             break;
     }
@@ -66,7 +100,7 @@ previous.addEventListener("click", function() {
         case 1: 
         previous.disabled = true;
         break;
-    case 10:
+    case numberOfQuestions:
         next.disabled = false;
         break;
     }
@@ -96,26 +130,30 @@ let submit = document.getElementById("formulario");
 submit.addEventListener("submit", function(event) {
     event.preventDefault();
     let respuestas = [];
-    for (let i = 0; i < 40; i++) {
+    for (let i = 0; i < numberOfQuestions*4; i++) {
         if (event.target[i].checked) {
             respuestas.push(event.target[i].value);
         };
     };
-    if (respuestas.length < 10) {
+    if (respuestas.length < numberOfQuestions) {
         Swal.fire({
             icon: 'error',
             title: 'Oops...',
             text: 'You have to answer all questions!',
           })
     } else {
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < numberOfQuestions; i++) {
             if (respuestas[i] == answers[i]) {
                 score += 1;
             } 
         }
+        //mostrar la página final
         document.getElementById("resultado").classList.toggle("hide");
         document.getElementById("pregunta11").classList.toggle("hide");
-        document.querySelector("aside").classList.toggle("hide")
+        document.querySelector("aside").classList.toggle("hide");
+
+        //mostrar datos personalizados
+        document.getElementById("usuario").innerHTML = usuario;
         document.getElementById("score").innerHTML = score;
     }
 })
