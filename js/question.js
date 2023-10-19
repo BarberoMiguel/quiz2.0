@@ -11,6 +11,13 @@ firebase.initializeApp(firebaseConfig);// Inicializaar app Firebase
 
 const db = firebase.firestore();// db representa mi BBDD //inicia Firestore
 
+const provider = new firebase.auth.GoogleAuthProvider();
+const auth = firebase.auth();
+firebase.auth().onAuthStateChanged((user) => {
+    if (!user) {
+       window.location.href = "../home.html";
+    }});
+
 let answers = [];
 let numberOfQuestions = 10;
 

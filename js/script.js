@@ -31,21 +31,41 @@ const db = firebase.firestore();// db representa mi BBDD //inicia Firestore
 
 const googleSignInButton = document.getElementById("google-sign-in-button");
 
+const provider = new firebase.auth.GoogleAuthProvider();
+const auth = firebase.auth();
+const users = db.collection('usuarios');
 googleSignInButton.addEventListener("click", () => {
-     const provider = new firebase.auth.GoogleAuthProvider();
-     const auth = firebase.auth();
      auth.signInWithPopup(provider)
      .then((result) => {
      const user = result.user;
-     
-     
+     users.where('email', '==', user.email).get()
+     .then((querySnapshot) => {
+     if (querySnapshot.empty) {
+          let usuario = {
+               name: user.displayName,
+               email: user.email,
+               scores: [],
+          }
+          users.add(usuario)
+          .then((docRef) => {
+          console.log("Usuario agregado con ID: ", docRef.id);
+          })
+          .catch((error) => {
+          console.error("Error al agregar el usuario: ", error);
+          });
+     }
      })
      .catch((error) => {
-     const errorCode = error.code;
-     const errorMessage = error.message;
-     // Más manejo de errores
+     console.error('Error al realizar la consulta:', error);
+     });
+     })
+     .catch((error) => {
+     console.error('Error al iniciar sesión:', error);
      });
 });
+
+
+
 
 
 
