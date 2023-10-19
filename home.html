@@ -22,7 +22,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="./css/style.css" />
   </head>
   <body>
     <header>
@@ -46,39 +46,17 @@
         <button id="loginButton">Log In</button>
       </section>
 
-      <section id="ranking" style="display:none">
-        <table>
-          <caption>
-            Ranking
-          </caption>
-          <thead>
-            <tr>
-              <th>Username</th>
-              <th>Score</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Test1</td>
-              <td>10</td>
-            </tr>
-            <tr>
-              <td>Test2</td>
-              <td>8</td>
-            </tr>
-            <tr>
-              <td>Test3</td>
-              <td>6</td>
-            </tr>
-            <tr>
-              <td>Test4</td>
-              <td>4</td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
+      
     </main>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-auth.js"></script>
     <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
-    <script src="./script.js"></script>
+    <script src="./js/script.js"></script>
   </body>
 </html>

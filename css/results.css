@@ -1,0 +1,73 @@
+/* Fonts */
+@font-face {
+    font-family: "Gabarito", sans-serif;
+    font-family: "Rubik", sans-serif;
+    src: url(https://fonts.googleapis.com/css2?family=Gabarito&family=Rubik:wght@300&display=swap);
+  }
+  
+  :root {
+    --sand: #fdb058;
+    --yellow: #ffbb1c;
+    --blue: #93d3df;
+    --linen: #fdefe4;
+    --wolf: #e0d3cc;
+    --violet: #473950;
+  }
+
+  /* General rules */
+  * {
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    margin: 0;
+  }
+  
+  html {
+    height: 100vh;
+    width: 100vw;
+  }
+  
+  body {
+    background: url(../assets/fondo3.jpg) no-repeat center;
+    background-attachment: fixed;
+    background-size: cover;
+  }
+  
+  /* Header */
+  header {
+    font-family: "Gabarito", sans-serif;
+    background-color: #4a6a7099;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    height: 80px;
+  }
+  
+  header h1 {
+    color: var(--blue);
+    text-shadow: 4px 4px 3px #0009;
+    font-size: 40px;
+    margin: 0 10px 0;
+  }
+  
+  #icons {
+    display: flex;
+    position: absolute;
+    right: 5px;
+  }
+  
+  #icons img {
+    margin: 0 5px;
+    height: 50px;
+    width: 50px;
+    cursor: pointer;
+  }
+  
+  /* Main */
+  main {
+    font-family: "Rubik", sans-serif;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+  }
+  

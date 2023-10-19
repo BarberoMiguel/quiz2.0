@@ -26,9 +26,8 @@ html {
 }
 
 body {
-  background-image: url(./assets/fondo0.jpg);
+  background: url(../assets/fondo0.jpg) no-repeat center;
   background-attachment: fixed;
-  background-repeat: no-repeat;
   background-size: cover;
   backdrop-filter: blur(3px);
   margin: 0;
@@ -71,7 +70,7 @@ main {
   display: flex;
   flex-flow: column wrap;
   justify-content: center;
-  align-content: center;
+  align-items: center;
 }
 
 #info {
