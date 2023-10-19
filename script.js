@@ -1,74 +1,68 @@
-{/* <div
-          id="g_id_onload"
-          data-client_id="858801986512-q7fr89ncr3cirmbklgj16m96hfmrphsb.apps.googleusercontent.com"
-          data-context="signin"
-          data-ux_mode="popup"
-          data-callback="signInWithGoogle"
-          data-auto_prompt="false"
-        ></div>
+const firebaseConfig = {
+  apiKey: "AIzaSyBI9SwSOMuFb1rO_tv7oaI26_TFJi8ugXo",
+  authDomain: "quiz-f6e00.firebaseapp.com",
+  projectId: "quiz-f6e00",
+  storageBucket: "quiz-f6e00.appspot.com",
+  messagingSenderId: "172246500008",
+  appId: "1:172246500008:web:7f9cc8ba5f365d38ea389d"
+};
 
-        <div
-          class="g_id_signin"
-          data-type="standard"
-          data-shape="rectangular"
-          data-theme="outline"
-          data-text="signin_with"
-          data-size="large"
-          data-logo_alignment="left"
-        ></div> */}
+firebase.initializeApp(firebaseConfig);// Inicializaar app Firebase
 
-let data = {
-  labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
-  series: [
-    [5, 2, 4, 2, 0]
-  ]
+const db = firebase.firestore();// db representa mi BBDD //inicia Firestore
+
+const googleSignInButton = document.getElementById("loginButton");
+
+const provider = new firebase.auth.GoogleAuthProvider();
+const auth = firebase.auth();
+const users = db.collection('usuarios');
+googleSignInButton.addEventListener("click", () => {
+     auth.signInWithPopup(provider)
+     .then((result) => {
+     const user = result.user;
+     users.where('email', '==', user.email).get()
+     .then((querySnapshot) => {
+     if (querySnapshot.empty) {
+          let usuario = {
+               name: user.displayName,
+               email: user.email,
+               scores: [],
+          }
+          users.add(usuario)
+          .then((docRef) => {
+          console.log("Usuario agregado con ID: ", docRef.id);
+          })
+          .catch((error) => {
+          console.error("Error al agregar el usuario: ", error);
+          });
+     }
+     })
+     .catch((error) => {
+     console.error('Error al realizar la consulta:', error);
+     });
+     })
+     .catch((error) => {
+     console.error('Error al iniciar sesión:', error);
+     });
+});
+
+/* let data = {
+  labels: ["Mon", "Tue", "Wed", "Thu", "Fri"],
+  series: [[5, 2, 4, 2, 0]],
 };
 
 var options = {
   height: 200,
-  fullWidth: true
+  fullWidth: true,
 };
 
-new Chartist.Line('.ct-chart', data, options);
+new Chartist.Line(".ct-chart", data, options);
+ */
 
-// FIREBASE AUTH ----------------------------------------------
-const auth = getAuth();
-auth.languageCode = "it";
-const provider = new GoogleAuthProvider();
-provider.addScope("https://www.googleapis.com/auth/contacts.readonly");
-/* provider.setCustomParameters({
-  login_hint: "user@example.com",
-}); */
-let googleSign = signInWithPopup(auth, provider)
-  .then((result) => {
-    // This gives you a Google Access Token. You can use it to access the Google API.
-    const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token = credential.accessToken;
-    // The signed-in user info.
-    const user = result.user;
-    // IdP data available using getAdditionalUserInfo(result)
-    // ...
-  })
-  .catch((error) => {
-    // Handle Errors here.
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // The email of the user's account used.
-    const email = error.customData.email;
-    // The AuthCredential type that was used.
-    const credential = GoogleAuthProvider.credentialFromError(error);
-    // ...
-  });
 
-// Auth state observers
-const currentUser = auth.currentUser();
-firebase.auth().onAuthStateChanged((user) => {
-  if (user) {
-  } else {
-  }
-});
+// Crear/guardar usuario con base de datos
 
-// Función para agregar usuario creado a la base de datos
+/* // Función para agregar usuario creado a la base de datos
 const createUser = (user) => {
   db.collection("users").add(user);
 };
@@ -119,10 +113,27 @@ const signOut = () => {
     .catch((error) => {
       console.log("hubo un error: " + error);
     });
-};
+}; */
 
-let login = document.getElementById('login');
-login.addEventListener('click' , googleSign)
+// Funciones
+
+// Eventos
 
 
-signInWithGoogle();
+let loginSection = document.getElementById("login");
+let loginButton = document.getElementById('loginButton');
+let loginTopButton = document.getElementById('loginTop');
+let loginPop = `<div id="loginPopUp">
+                <form action="#" id="logInForm">
+                <label for="email">Email: </label>
+                <input type="email" name="email" id="email">
+                <label for="password">Password: </label>
+                <input type="text" name="password" id="password">
+                <input type="submit" value="Submit">
+                </form>
+                </div>`;
+
+
+loginTopButton.addEventListener("click", () => {
+  loginSection.innerHTML += loginPop;
+});

@@ -74,10 +74,6 @@ main {
   align-content: center;
 }
 
-main section {
-  backdrop-filter: brightness(60%);
-}
-
 #info {
   display: flex;
   flex-flow: column wrap;
@@ -125,26 +121,39 @@ main section {
   cursor: pointer;
 }
 
-#signUp {
-  font-size: 1.1em;
-  text-decoration: underline;
-  text-shadow: 2px 2px 5px #0009;
-  width: fit-content;
-  height: fit-content;
-  color: var(--violet);
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  align-self: center;
-}
-
 #loginPopUp {
+  height: 16em;
+  width: 20em;
   position: absolute;
   top: 25vh;
   align-self: center;
   background-color: var(--linen);
-  height: 20em;
-  width: 18em;
+  box-shadow: 0 8px 8px #0009;
+}
+
+#logInForm {
+  display: flex;
+  flex-flow: column wrap;
+  align-content: center;
+  padding: 10px 0 0;
+}
+
+#logInForm label {
+  padding: 15px 0 5px;
+  text-align: left;
+}
+
+#logInForm input {
+  width: 80%;
+  padding: 8px 5px;
+  justify-self: center;
+}
+
+#logInForm input[type=submit] {
+  font-size: 1.2em;
+  margin-top: 28px;
+  width: fit-content;
+  align-self: center;
 }
 
 #ranking {
