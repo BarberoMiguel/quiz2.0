@@ -8,17 +8,17 @@ const firebaseConfig = {
   appId: "1:172246500008:web:7f9cc8ba5f365d38ea389d"
 };
 
-firebase.initializeApp(firebaseConfig);// Inicializaar app Firebase
+firebase.initializeApp(firebaseConfig);// Inicializar app Firebase
 
-const db = firebase.firestore();// db representa mi BBDD //inicia Firestore
+const db = firebase.firestore();// db representa mi BBDD // Inicia Firestore
 
-const googleSignInButton = document.getElementById("loginButton");
-
+// Google Log In ------------------------------------------------------------------------------------
+let loginButton = document.getElementById('loginButton');;
 const provider = new firebase.auth.GoogleAuthProvider();
 const auth = firebase.auth();
 const users = db.collection('usuarios');
-googleSignInButton.addEventListener("click", () => {
-     auth.signInWithPopup(provider)
+function signIn() {
+  auth.signInWithPopup(provider)
      .then((result) => {
      const user = result.user;
      users.where('email', '==', user.email).get()
@@ -45,20 +45,140 @@ googleSignInButton.addEventListener("click", () => {
      .catch((error) => {
      console.error('Error al iniciar sesión:', error);
      });
+};
+
+
+// Cerrar sesión -------------------------------------------------------------------------------------
+const signOut = () => {
+  let user = firebase.auth().currentUser;
+  firebase
+    .auth()
+    .signOut()
+    .then(() => {
+      console.log(user.email + 'signed out')
+    })
+    .catch((error) => {
+      console.log("Error: " + error);
+    });
+};
+
+
+// Eventos -------------------------------------------------------------------------------------------
+loginButton.addEventListener("click", () => {
+  signIn()
 });
 
-/* let data = {
-  labels: ["Mon", "Tue", "Wed", "Thu", "Fri"],
-  series: [[5, 2, 4, 2, 0]],
-};
+let loginTopButton = document.getElementById('loginTop');
+loginTopButton.addEventListener("click", () => {
+  if (authCheck == true) {
+    Swal.fire({
+      title: 'Do you want to sign out?',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      customClass: {
+        title: 'signOutMessage'
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        signOut();
+        Swal.fire('You signed out successfully!', '', 'success')
+      } 
+    })
+    
+  } else {
+    signIn();
+  }
+});
 
-var options = {
-  height: 200,
-  fullWidth: true,
-};
 
-new Chartist.Line(".ct-chart", data, options);
- */
+// Gráfica --------------------------------------------------------------------------------------------
+function createStats() {
+  // fetch
+  // String(new Date().getDate()).padStart(2, '0'); día actual
+  // new Date().toLocaleString('default', { month: 'long' }); mes actual
+
+  let dates = ['10 - Oct', '11 - Oct', '12 - Oct', '13 - Oct', '14 - Oct'];
+  let scores = [4, 6, 9, 2, 5];
+
+  let data = {
+    labels: dates,
+    series: [scores],
+  };
+  
+  var options = {
+    high: 10,
+    height: 250,
+    fullWidth: true,
+    stretch: true,
+    axisX: {
+      position: 'start',
+      showGrid: false,
+      labelOffset: {
+        x: 0,
+        y: -10
+      }
+    },
+    axisY: {
+      onlyInteger: true,
+      labelOffset: {
+        x: 0,
+        y: 5
+      }
+    },
+    chartPadding: {
+      top: 15,
+      right: 25,
+      bottom: 15,
+      left: 0
+    }
+  };
+
+  new Chartist.Bar('.ct-chart', data, options);
+}
+
+let home = document.getElementById('home');
+
+function userHome() {
+  home.innerHTML = `<article id="info">
+  <h1>Welcome NAME</h1>
+  <p>Ready to try again?</p>
+  <button id="start"><a href="./pages/quiz">Start</a></button>
+  <p>Check out your last scores!</p>
+  <div id="chartBox">
+  <div class="ct-chart ct-perfect-fourth"></div>
+  </div>
+  </article>`
+  createStats();
+}
+
+function defaultHome() {
+  home.innerHTML =`<article id="info">
+  <h1>Welcome!</h1>
+  <p>Test your knowledge on this 10 history questions quiz!</p>
+  <p>Log in to get started!</p>
+  </article>
+  <article id="login">
+  <button id="loginButton">Log In</button>
+  </article>`
+}
+
+// Auth state observers
+let authCheck = false;
+firebase.auth().onAuthStateChanged((user) => {
+if (user) {
+  authCheck = true;
+  setHome();
+} else {
+  authCheck = false;
+  defaultHome();
+}
+});
+
+async function getQuizQuestions() {
+  let questions = await fetch("https://opentdb.com/api.php?amount=10&category=23&difficulty=easy&type=multiple")
+  questions = await questions.json();
+  return questions;
+}
 
 
 // Crear/guardar usuario con base de datos
@@ -121,9 +241,7 @@ const signOut = () => {
 // Eventos
 
 
-let loginSection = document.getElementById("login");
-let loginButton = document.getElementById('loginButton');
-let loginTopButton = document.getElementById('loginTop');
+/* let loginSection = document.getElementById("login");
 let loginPop = `<div id="loginPopUp">
                 <form action="#" id="logInForm">
                 <label for="email">Email: </label>
@@ -132,15 +250,4 @@ let loginPop = `<div id="loginPopUp">
                 <input type="text" name="password" id="password">
                 <input type="submit" value="Submit">
                 </form>
-                </div>`;
-
-
-loginTopButton.addEventListener("click", () => {
-  loginSection.innerHTML += loginPop;
-});
-
-async function getQuizQuestions() {
-    let questions = await fetch("https://opentdb.com/api.php?amount=10&category=23&difficulty=easy&type=multiple")
-    questions = await questions.json();
-    return questions;
-}   
+                </div>`; */

@@ -7,11 +7,11 @@
 
 /* Color palette */
 :root {
-  --sand: #fdb058;
-  --yellow: #ffbb1c;
-  --blue: #93d3df;
-  --linen: #fdefe4;
-  --wolf: #e0d3cc;
+  --peach: #FFDE9B;
+  --yellow: #FFBB1C;
+  --blue: #93D3DF;
+  --linen: #FDEFE4;
+  --wolf: #E0D3CC;
   --violet: #473950;
 }
 
@@ -30,9 +30,8 @@ body {
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-size: cover;
-  backdrop-filter: blur(3px);
   margin: 0;
-  height: 100%;
+  /* height: 100%; */
 }
 
 /* Header */
@@ -72,6 +71,35 @@ main {
   flex-flow: column wrap;
   justify-content: center;
   align-content: center;
+  height: 90.5vh;
+  backdrop-filter: blur(3px);
+}
+
+.signOutMessage {
+  font-family: "Gabarito", sans-serif;
+}
+
+.ct-chart {
+  height: 250px;
+  background-image: linear-gradient(#FFDE9B80, #FFDE9B90, #ffbb1c90, #ffbb1c80);
+}
+
+.ct-label, .ct-grid {
+  color: #000;
+  font-family: "Rubik", sans-serif;
+}
+
+.ct-series-a .ct-bar {
+  stroke: var(--violet);
+  stroke-width: 20px;
+  stroke-linecap: butt;
+}
+
+#chartBox {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  text-align: center;
 }
 
 #info {
@@ -83,7 +111,7 @@ main {
 
 #info h1 {
   font-family: "Gabarito", sans-serif;
-  margin: 20px 0 10px;
+  margin: 0.5em 0 10px;
   font-size: 70px;
   letter-spacing: 5px;
   background: -webkit-linear-gradient(#fed58090, #ffb60a);
@@ -95,6 +123,7 @@ main {
 
 #info p {
   font-size: 30px;
+  margin: 30px 0 10px;
   padding: 0 30px;
   color: var(--violet);
   text-shadow: 2px 2px 4px #ffb60a;
@@ -107,7 +136,16 @@ main {
   text-align: center;
 }
 
-#loginButton {
+#start {
+  align-self: center;
+}
+
+#start a {
+  color: var(--violet);
+  text-decoration: none;
+}
+
+#loginButton, #start {
   font-family: "Gabarito", sans-serif;
   font-size: 2.3em;
   margin: 10px;
@@ -119,41 +157,6 @@ main {
   text-shadow: 0 2px 5px #0005;
   box-shadow: 0 5px 8px #0009;
   cursor: pointer;
-}
-
-#loginPopUp {
-  height: 16em;
-  width: 20em;
-  position: absolute;
-  top: 25vh;
-  align-self: center;
-  background-color: var(--linen);
-  box-shadow: 0 8px 8px #0009;
-}
-
-#logInForm {
-  display: flex;
-  flex-flow: column wrap;
-  align-content: center;
-  padding: 10px 0 0;
-}
-
-#logInForm label {
-  padding: 15px 0 5px;
-  text-align: left;
-}
-
-#logInForm input {
-  width: 80%;
-  padding: 8px 5px;
-  justify-self: center;
-}
-
-#logInForm input[type=submit] {
-  font-size: 1.2em;
-  margin-top: 28px;
-  width: fit-content;
-  align-self: center;
 }
 
 #ranking {
@@ -193,3 +196,63 @@ main {
   border: 1px solid #47395090;
   padding: 20px 20px;
 }
+
+/* Media queries */
+
+@media only screen
+  and (max-device-width: 375px) {
+    #info h1 {
+      margin-top: 2em;
+    }
+  }
+
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 1024px) {
+
+}
+
+@media only screen 
+  and (min-device-width: 1024px) 
+  and (max-device-width: 1600px) {
+
+  }
+
+/* User login pop up test */
+
+/*
+#loginPopUp {
+  height: 16em;
+  width: 20em;
+  position: absolute;
+  top: 25vh;
+  align-self: center;
+  background-color: var(--linen);
+  box-shadow: 0 8px 8px #0009;
+}
+
+#logInForm {
+  display: flex;
+  flex-flow: column wrap;
+  align-content: center;
+  padding: 10px 0 0;
+}
+
+#logInForm label {
+  padding: 15px 0 5px;
+  text-align: left;
+}
+
+#logInForm input {
+  width: 80%;
+  padding: 8px 5px;
+  justify-self: center;
+}
+
+#logInForm input[type=submit] {
+  font-size: 1.2em;
+  margin-top: 28px;
+  width: fit-content;
+  align-self: center;
+}
+*/
