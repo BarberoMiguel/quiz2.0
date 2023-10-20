@@ -20,12 +20,18 @@ firebase.auth().onAuthStateChanged((user) => {
 
 let scores = db.collection('scores');
 let bodyTable = document.querySelector("tbody");
-for (let i = 0; i < scores.length; i++) {
-  let tr = `<tr>
-              <td>${i+1}</td>
-              <td>${scores[i].name}</td>
-              <td>${scores[i].score}</td>
-            </tr>`;
-  bodyTable.innerHTML += tr;
-};
+let docID = "5p46fjBYjwl1ckFsurFO";
+const documentoRef = db.collection("scores").doc(docID);
+documentoRef.get().then((doc) => {
+  const scores = doc.data().scores;
+  for (let i = 0; i < scores.length; i++) {
+    let tr = `<tr>
+                <td>${i+1}</td>
+                <td>${scores[i].user}</td>
+                <td>${scores[i].score}</td>
+              </tr>`;
+    bodyTable.innerHTML += tr;
+  };
+});
+
 
