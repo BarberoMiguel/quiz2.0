@@ -50,6 +50,26 @@ async function drawQuestions() {
     } 
 }
 
+function bubbleSort(inputArr) {
+    let len = inputArr.length;
+    let swaped;
+    for (let i = 0; i < len; i++) {
+        swaped = false;
+        for (let j = 0; j < len-i-1; j++) {
+            if (inputArr[j].score < inputArr[j + 1].score) {
+                let tmp = inputArr[j];
+                inputArr[j] = inputArr[j + 1];
+                inputArr[j + 1] = tmp;
+                swaped = true;
+            }
+        }
+        if (!swaped) {
+            break;
+        }
+    }
+    return inputArr;
+};
+
 //pintar los contenedores de las preguntas en el DOM
 let formulario = document.getElementById("formulario");
 for (let i = 1; i <= numberOfQuestions; i++) {
@@ -155,13 +175,73 @@ submit.addEventListener("submit", function(event) {
             } 
         }
         //mostrar la página final
-        document.getElementById("resultado").classList.toggle("hide");
+        document.querySelector(".resultado").classList.toggle("hide");
         document.getElementById("pregunta11").classList.toggle("hide");
         document.querySelector("aside").classList.toggle("hide");
 
+        //guardar datos
+        let usuario;
+        let email;
+        firebase.auth().onAuthStateChanged((user) => {
+            usuario = user.displayName;
+            email = user.email;
+            document.getElementById("usuario").innerHTML = ` ${usuario}`;
+            let puntuacion =  {user: usuario, score: 10*score/numberOfQuestions};
+            const fecha = new Date();
+            let puntuacion1 = {date: `${fecha.getDate()}/${fecha.getMonth() + 1}/${fecha.getFullYear()}`, score: 10*score/numberOfQuestions};
+            db.collection('usuarios').where('email', '==', email)
+                .get().then(user1 => {
+                user1.forEach((doc) => {
+                    let docID = doc.id;
+                    let scoreData = doc.data().scores;
+                    if (scoreData == "") {
+                        scoreData = [puntuacion1]
+                    } else {
+                        scoreData.push(puntuacion1);
+                    };
+                    const userFound = db.collection('usuarios').doc(docID);
+                    userFound.update({
+                        scores: scoreData
+                    });
+                });
+            })
+            .catch((error) => {
+                console.error('Error al buscar usuarios:', error);
+                });
+            db.collection("scores").get().then((data) => {
+                data.forEach((doc) => {
+                    let scoresID = doc.id;
+                    let scoresData = doc.data().scores;
+                    scoresData.push(puntuacion);
+                    scoresData = bubbleSort(scoresData);
+                    const scoresFound = db.collection('scores').doc(scoresID);
+                        scoresFound.update({
+                            scores: scoresData
+                        });
+                    });
+            })
+            .catch((error) => {
+                console.error('Error al buscar scores:', error) });
+        });
+
         //mostrar datos personalizados
-        document.getElementById("usuario").innerHTML = usuario;
-        document.getElementById("score").innerHTML = score;
+        document.getElementById("score").innerHTML = `${score} / ${numberOfQuestions}`;
+        let text = document.querySelector(".resultado p");
+        let imageUrl = document.getElementById("resultado");
+        if (score/numberOfQuestions == 1) {
+            text.innerHTML = "Perfect Score!!";
+            imageUrl.src = "../assets/gifs/10.gif";
+        } else if (score/numberOfQuestions >= 0.7) {
+            text.innerHTML = "Great score!!";
+            imageUrl.src = "../assets/gifs/7-9.gif";
+        } else if (score/numberOfQuestions >= 0.5) {
+            text.innerHTML = "Well done!! You'll do better next Time!";
+            imageUrl.src = "../assets/gifs/5-6.gif";
+        } else {
+            text.innerHTML = "Looks like you should study more";
+            imageUrl.src = "../assets/gifs/0-4.gif";
+        }
     }
 })
-    
+
+

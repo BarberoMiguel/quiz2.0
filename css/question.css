@@ -118,6 +118,7 @@ label {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    height: 100vh;
 }
 
 .labels {
@@ -172,6 +173,19 @@ h2, span {
 
 .color4 {
     background-color: #118ab2;
+}
+
+.resultado img {
+    height: 20vh;
+    margin: 2%;
+}
+
+a {
+    text-decoration: none;
+}
+
+p {
+    font-size: 1rem;
 }
 
 .hide {
