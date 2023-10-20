@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home</title>
-    <link rel="stylesheet" href="./css/style.css">
-    <link rel="shortcut icon" href="./assets/icons/favicon.png" type="image/x-icon">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -15,25 +12,43 @@
       href="https://fonts.googleapis.com/css2?family=Gabarito&family=Rubik:wght@300&display=swap"
       rel="stylesheet"
     />
-</head>
 
-<body>
+    <!-- Favicon -->
+    <link
+      rel="shortcut icon"
+      href="./assets/icons/favicon.png"
+      type="image/x-icon"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
     <header>
-        <h1>Quiz 2.0</h1>
-        <img src="./assets/icons/mute.png" alt="Mute icon"> //Music mute button
-        <img src="./assets/icons/home.png" alt="Home icon"> //Home button
-        <img src="./assets/icons/login.png" alt="Login icon"> //Login
+      <h1>Quiz 2.0</h1>
+      <section id="icons">
+        <img src="./assets/mute.png" alt="Mute icon" id="mute"/><!-- Mute button -->
+        <img src="./assets/home.png" alt="Home icon" id="home"/><!-- Home button -->
+        <img src="./assets/login.png" alt="Login icon" id="loginTop" /><!-- //Login -->
+      </section>
     </header>
 
-    <button id="google-sign-in-button">Iniciar sesión con Google</button>
+    <main id="home">
+      
+      <section id="info">
+        <h1>Welcome!</h1>
+        <p>Test your knowledge on this 10 history questions quiz!</p>
+        <p>Log in to get started!</p>
+      </section>
 
-    <main id="home hide">
-        <section id="login"></section>
-        <section id="info"></section>
-        <section id="statistics"></section>
+      <section id="login">
+        <button id="loginButton">Log In</button>
+      </section>
+
+      
     </main>
-    
-    
+
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
 
@@ -41,7 +56,7 @@
         https://firebase.google.com/docs/web/setup#available-libraries -->
     <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-auth.js"></script>
+    <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
     <script src="./js/script.js"></script>
-</body>
-
+  </body>
 </html>

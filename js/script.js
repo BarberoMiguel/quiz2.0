@@ -1,21 +1,3 @@
-// Google sign in
-/* <div id="g_id_onload"
-     data-client_id="858801986512-q7fr89ncr3cirmbklgj16m96hfmrphsb.apps.googleusercontent.com"
-     data-context="signin"
-     data-ux_mode="popup"
-     data-callback="signInWithGoogle"
-     data-auto_prompt="false">
-</div>
-
-<div class="g_id_signin"
-     data-type="standard"
-     data-shape="rectangular"
-     data-theme="outline"
-     data-text="signin_with"
-     data-size="large"
-     data-logo_alignment="left">
-</div> */
-
 const firebaseConfig = {
   apiKey: "AIzaSyBI9SwSOMuFb1rO_tv7oaI26_TFJi8ugXo",
   authDomain: "quiz-f6e00.firebaseapp.com",
@@ -29,7 +11,7 @@ firebase.initializeApp(firebaseConfig);// Inicializaar app Firebase
 
 const db = firebase.firestore();// db representa mi BBDD //inicia Firestore
 
-const googleSignInButton = document.getElementById("google-sign-in-button");
+const googleSignInButton = document.getElementById("loginButton");
 
 const provider = new firebase.auth.GoogleAuthProvider();
 const auth = firebase.auth();
@@ -64,9 +46,100 @@ googleSignInButton.addEventListener("click", () => {
      });
 });
 
+/* let data = {
+  labels: ["Mon", "Tue", "Wed", "Thu", "Fri"],
+  series: [[5, 2, 4, 2, 0]],
+};
+
+var options = {
+  height: 200,
+  fullWidth: true,
+};
+
+new Chartist.Line(".ct-chart", data, options);
+ */
 
 
+// Crear/guardar usuario con base de datos
+
+/* // Función para agregar usuario creado a la base de datos
+const createUser = (user) => {
+  db.collection("users").add(user);
+};
+
+// Registrar usuario
+const signUpUser = (email, password) => {
+  firebase
+    .auth()
+    .createUserWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      let user = userCredential.user;
+      createUser({
+        id: user.id,
+        email: user.email,
+      });
+    })
+    .catch((error) => {
+      let errorCode = error.code;
+      let errorMessage = error.message;
+      alert("Error en el sistema" + error.message);
+    });
+};
+
+// Login de usuario
+const signInUser = (email, password) => {
+  firebase
+    .auth()
+    .signInWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      let user = userCredential.user;
+    })
+    .catch((error) => {
+      let errorCode = error.code;
+      let errorMessage = error.message;
+      alert("Error en el sistema" + error.message);
+    });
+};
+
+// Sign Out
+const signOut = () => {
+  let user = firebase.auth().currentUser;
+  firebase
+    .auth()
+    .signOut()
+    .then(() => {
+      alert("Has salido del sistema exitosamente.");
+    })
+    .catch((error) => {
+      console.log("hubo un error: " + error);
+    });
+}; */
+
+// Funciones
+
+// Eventos
 
 
+let loginSection = document.getElementById("login");
+let loginButton = document.getElementById('loginButton');
+let loginTopButton = document.getElementById('loginTop');
+let loginPop = `<div id="loginPopUp">
+                <form action="#" id="logInForm">
+                <label for="email">Email: </label>
+                <input type="email" name="email" id="email">
+                <label for="password">Password: </label>
+                <input type="text" name="password" id="password">
+                <input type="submit" value="Submit">
+                </form>
+                </div>`;
 
 
+loginTopButton.addEventListener("click", () => {
+  loginSection.innerHTML += loginPop;
+});
+
+async function getQuizQuestions() {
+    let questions = await fetch("https://opentdb.com/api.php?amount=10&category=23&difficulty=easy&type=multiple")
+    questions = await questions.json();
+    return questions;
+}   

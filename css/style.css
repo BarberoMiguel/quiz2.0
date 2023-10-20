@@ -1,26 +1,194 @@
+/* Fonts */
 @font-face {
-    font-family: 'Gabarito', sans-serif;
-    font-family: 'Rubik', sans-serif;
-    src: url(https://fonts.googleapis.com/css2?family=Gabarito&family=Rubik:wght@300&display=swap);
+  font-family: "Gabarito", sans-serif;
+  font-family: "Rubik", sans-serif;
+  src: url(https://fonts.googleapis.com/css2?family=Gabarito&family=Rubik:wght@300&display=swap);
 }
 
+/* Color palette */
 :root {
-    --sand: #FDB058;
-    --yellow: #FFBB1C;
-    --blue: #93D3DF;
-    --linen: #FDEFE4;
-    --wolf: #E0D3CC;
+  --sand: #fdb058;
+  --yellow: #ffbb1c;
+  --blue: #93d3df;
+  --linen: #fdefe4;
+  --wolf: #e0d3cc;
+  --violet: #473950;
 }
 
+/* General rules */
 * {
-    box-sizing: border-box;
-    scroll-behavior: smooth;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+html {
+  height: 100%;
 }
 
 body {
-    background-image: url(../assets/fondo0.jpg);
+  background: url(../assets/fondo0.jpg) no-repeat center;
+  background-attachment: fixed;
+  background-size: cover;
+  backdrop-filter: blur(3px);
+  margin: 0;
+  height: 100%;
 }
 
-.hide {
-    display: none;
+/* Header */
+header {
+  font-family: "Gabarito", sans-serif;
+  background-color: #4a6a7099;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  height: 80px;
+}
+
+header h1 {
+  color: var(--blue);
+  text-shadow: 4px 4px 3px #0009;
+  font-size: 40px;
+  margin: 0 10px 0;
+}
+
+#icons {
+  display: flex;
+  position: absolute;
+  right: 5px;
+}
+
+#icons img {
+  margin: 0 5px;
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+}
+
+/* Main */
+main {
+  font-family: "Rubik", sans-serif;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+#info {
+  display: flex;
+  flex-flow: column wrap;
+  text-align: center;
+  margin: 10px auto;
+}
+
+#info h1 {
+  font-family: "Gabarito", sans-serif;
+  margin: 20px 0 10px;
+  font-size: 70px;
+  letter-spacing: 5px;
+  background: -webkit-linear-gradient(#fed58090, #ffb60a);
+  background-clip: content-box;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 4px 0 0 var(--violet);
+}
+
+#info p {
+  font-size: 30px;
+  padding: 0 30px;
+  color: var(--violet);
+  text-shadow: 2px 2px 4px #ffb60a;
+}
+
+#login {
+  display: flex;
+  flex-flow: column wrap;
+  align-content: center;
+  text-align: center;
+}
+
+#loginButton {
+  font-family: "Gabarito", sans-serif;
+  font-size: 2.3em;
+  margin: 10px;
+  width: 5.5em;
+  height: 2em;
+  color: var(--violet);
+  background-image: linear-gradient(var(--blue), #6f9fa8);
+  border: 2px solid var(--violet);
+  text-shadow: 0 2px 5px #0005;
+  box-shadow: 0 5px 8px #0009;
+  cursor: pointer;
+}
+
+#loginPopUp {
+  height: 16em;
+  width: 20em;
+  position: absolute;
+  top: 25vh;
+  align-self: center;
+  background-color: var(--linen);
+  box-shadow: 0 8px 8px #0009;
+}
+
+#logInForm {
+  display: flex;
+  flex-flow: column wrap;
+  align-content: center;
+  padding: 10px 0 0;
+}
+
+#logInForm label {
+  padding: 15px 0 5px;
+  text-align: left;
+}
+
+#logInForm input {
+  width: 80%;
+  padding: 8px 5px;
+  justify-self: center;
+}
+
+#logInForm input[type=submit] {
+  font-size: 1.2em;
+  margin-top: 28px;
+  width: fit-content;
+  align-self: center;
+}
+
+#ranking {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  margin: 80px 0 40px;
+  color: #253538;
+  /* box-shadow: 0 8px 15px #0008; */
+}
+
+#ranking table {
+  height: fit-content;
+  width: 300px;
+  background-image: linear-gradient(var(--blue), #6f9fa8);
+  border: 1px solid #47395090;
+  border-collapse: collapse;
+}
+
+#ranking caption {
+  font-size: 30px;
+  font-weight: bolder;
+  letter-spacing: 5px;
+  border: 2px solid #47395090;
+  background-color: var(--blue);
+  padding: 20px 0;
+}
+
+#ranking th {
+  font-size: 20px;
+  text-shadow: 2px 2px 2px #0002;
+}
+
+#ranking th,
+#ranking td {
+  letter-spacing: 2px;
+  border: 1px solid #47395090;
+  padding: 20px 20px;
 }

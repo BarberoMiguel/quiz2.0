@@ -5,17 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Results</title>
     <link rel="stylesheet" href="../css/results.css">
-    <link rel="shortcut icon" href="../assets/icons/favicon.png" type="image/x-icon">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Gabarito&family=Rubik:wght@300&display=swap"
+      rel="stylesheet"/>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../assets/icons/favicon.png" type="image/x-icon"/>
 </head>
 <body>
-    <section id="scoreBoard">
-        <h1>scoreBoard:</h1>
-        <table id="table">
-
-        </table>
+  <header>
+    <h1>Quiz 2.0</h1>
+    <section id="icons">
+      <img src="../assets/mute.png" alt="Mute icon" id="mute"/><!-- Mute button -->
+      <img src="../assets/home.png" alt="Home icon" id="home"/><!-- Home button -->
+      <img src="../assets/login.png" alt="Login icon" id="loginTop" /><!-- //Login -->
     </section>
+  </header>
+  <main>
+    <section id="ranking">
+      <table>
+        <caption>
+          Ranking
+        </caption>
+        <thead>
+          <tr>
+            <th id="rank">Ranking:</th>
+            <th id="user">Username:</th>
+            <th id="score">Score:</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        </tbody>
+      </table>
+    </section>
+  </main>
+  
 
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
+      <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
 
     <!-- TODO: Add SDKs for Firebase products that you want to use
