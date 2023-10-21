@@ -11,8 +11,41 @@ firebase.initializeApp(firebaseConfig);// Inicializar app Firebase
 
 const db = firebase.firestore();// db representa mi BBDD // Inicia Firestore
 
+// Auth state observer -----------------------------------------------------------------------------------
+let authCheck = false;
+firebase.auth().onAuthStateChanged((user) => {
+if (user) {
+  authCheck = true;
+  let username = user.displayName;
+  db.collection('usuarios')
+    .get()
+    .then(querySnapshot => {
+      let id;
+      let scores;
+      querySnapshot.forEach(doc => {
+        if (doc.data().email == user.email) {
+          id = doc.id;
+          scores = doc.data().scores.length;
+        }
+      })
+      if (scores == 0) {
+        userHome_noScores(username);
+      } else {
+        userHome(username, id);
+      }
+    })
+} else {
+  authCheck = false;
+  defaultHome();
+}
+});
+
+const loginButton = document.getElementById('loginButton');
+const loginTopButton = document.getElementById('loginTop');
+const results = document.getElementById('results')
+const home = document.getElementById('home');
+
 // Google Log In ------------------------------------------------------------------------------------
-let loginButton = document.getElementById('loginButton');;
 const provider = new firebase.auth.GoogleAuthProvider();
 const auth = firebase.auth();
 const users = db.collection('usuarios');
@@ -53,39 +86,46 @@ const signOut = () => {
     .auth()
     .signOut()
     .then(() => {
-      console.log(user.email + 'signed out')
+      console.log(user.email + ' signed out')
     })
     .catch((error) => {
       console.log("Error: " + error);
     });
 };
 
-// Eventos -------------------------------------------------------------------------------------------
-loginButton.addEventListener("click", () => {
-  signIn()
-});
+// Funciones -----------------------------------------------------------------------------------------
 
-let loginTopButton = document.getElementById('loginTop');
-loginTopButton.addEventListener("click", () => {
-  if (authCheck == true) {
-    Swal.fire({
-      title: 'Do you want to sign out?',
-      showCancelButton: true,
-      confirmButtonText: 'Yes',
-      customClass: {
-        title: 'signOutMessage'
-      },
-    }).then((result) => {
-      if (result.isConfirmed) {
-        signOut();
-        Swal.fire('You signed out successfully!', '', 'success')
-      } 
-    })
-    
-  } else {
-    signIn();
-  }
-});
+async function userHome(username, id) {
+  home.innerHTML = `<article id="info">
+  <h1>Welcome ${username}</h1>
+  <p>Ready to try again?</p>
+  <button id="start"><a href="./pages/question.html">Start</a></button>
+  <p>Check out your last scores!</p>
+  <div id="chartBox">
+  <div class="ct-chart ct-perfect-fourth"></div>
+  </div>
+  </article>`
+  createStats(id);
+}
+
+async function userHome_noScores(username) {
+  home.innerHTML = `<article id="info">
+  <h1>Welcome ${username}</h1>
+  <p>Play for the first time!</p>
+  <button id="start"><a href="./pages/question.html">Start</a></button>
+  </article>`
+}
+
+function defaultHome() {
+  home.innerHTML =`<article id="info">
+  <h1>Welcome!</h1>
+  <p>Test your knowledge on this 10 history questions quiz!</p>
+  <p>Log in to get started!</p>
+  </article>
+  <article id="login">
+  <button id="loginButton">Log In</button>
+  </article>`
+}
 
 // Gráfica --------------------------------------------------------------------------------------------
 let createStats = async function(id) {
@@ -103,10 +143,15 @@ let createStats = async function(id) {
       }
     })
 
-  if (window.innerWidth < 768) {
+  if (window.innerWidth < 1024) {
     for (i = 0; i < dates.length; i++) {
       dates[i] = dates[i].slice(0, -5);
     }
+    dates = dates.slice(Math.max(dates.length - 5, 0));
+    scores = scores.slice(Math.max(scores.length - 5, 0));
+  } else {
+    dates = dates.slice(Math.max(dates.length - 7, 0));
+    scores = scores.slice(Math.max(scores.length - 7, 0));
   }
 
   let data = {
@@ -145,68 +190,50 @@ let createStats = async function(id) {
   new Chartist.Bar('.ct-chart', data, options);
 }
 
-// Auth state observers
-let authCheck = false;
-firebase.auth().onAuthStateChanged((user) => {
-if (user) {
-  authCheck = true;
-  let username = user.displayName;
-  db.collection('usuarios')
-    .get()
-    .then(querySnapshot => {
-      let id;
-      let scores;
-      querySnapshot.forEach(doc => {
-        if (doc.data().email == user.email) {
-          id = doc.id;
-          scores = doc.data().scores.length;
-        }
-      })
-      if (scores == 0) {
-        userHome_noScores(username);
-      } else {
-        userHome(username, id);
-      }
-    })
-} else {
-  authCheck = false;
-  defaultHome();
-}
+// Eventos --------------------------------------------------------------------------------------------
+loginButton.addEventListener("click", () => {
+  console.log('test')
+  signIn()
 });
 
-let home = document.getElementById('home');
+loginTopButton.addEventListener("click", () => {
+  if (authCheck == true) {
+    Swal.fire({
+      title: 'Do you want to sign out?',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      customClass: {
+        title: 'sweetAlert'
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        signOut();
+        Swal.fire({
+          icon: 'success',
+          title: 'You signed out successfully!',
+          customClass: {
+            title: 'sweetAlert'
+          }
+        })
+      } 
+    })
+  } else {
+    signIn();
+  }
+});
 
-async function userHome(username, id) {
-  home.innerHTML = `<article id="info">
-  <h1>Welcome ${username}</h1>
-  <p>Ready to try again?</p>
-  <button id="start"><a href="./pages/quiz">Start</a></button>
-  <p>Check out your last scores!</p>
-  <div id="chartBox">
-  <div class="ct-chart ct-perfect-fourth"></div>
-  </div>
-  </article>`
-  createStats(id);
-}
-
-async function userHome_noScores(username) {
-  home.innerHTML = `<article id="info">
-  <h1>Welcome ${username}</h1>
-  <p>Play for the first time!</p>
-  <button id="start"><a href="./pages/quiz">Start</a></button>
-  </article>`
-}
-
-function defaultHome() {
-  home.innerHTML =`<article id="info">
-  <h1>Welcome!</h1>
-  <p>Test your knowledge on this 10 history questions quiz!</p>
-  <p>Log in to get started!</p>
-  </article>
-  <article id="login">
-  <button id="loginButton">Log In</button>
-  </article>`
-}
+results.addEventListener('click', function(event) {
+  if (authCheck == false) {
+    event.preventDefault()
+    Swal.fire({
+      icon: 'error',
+      title: 'You have to sign in first!',
+      customClass: {
+        title: 'sweetAlert'
+      },
+    })
+  }
+})
 
 // Crear/guardar usuario con base de datos
 

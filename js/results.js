@@ -35,3 +35,34 @@ documentoRef.get().then((doc) => {
 });
 
 
+// Cerrar sesión -------------------------------------------------------------------------------------
+let loginTopButton = document.getElementById('loginTop');
+
+const signOut = () => {
+  let user = firebase.auth().currentUser;
+  firebase
+    .auth()
+    .signOut()
+    .then(() => {
+      console.log(user.email + ' signed out')
+    })
+    .catch((error) => {
+      console.log("Error: " + error);
+    });
+};
+
+loginTopButton.addEventListener("click", () => {
+    Swal.fire({
+      title: 'Do you want to sign out?',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      customClass: {
+        title: 'sweetAlert'
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        signOut();
+        Swal.fire('You signed out successfully!', '', 'success')
+      } 
+    })
+});
