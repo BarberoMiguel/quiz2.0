@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question</title>
+    <link rel="stylesheet" href="../css/question.css">
+    <link rel="shortcut icon" href="../assets/icons/favicon.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Gabarito&family=Rubik:wght@300&display=swap"
+      rel="stylesheet"/>
+    
+</head>
+<body>
+    <section id="quiz">
+        <form id="formulario">
+            
+        </form>
+    </section>
+    <section class="hide resultado">
+        <h1>Well done <span id="usuario"></span>!</h1>
+        <h2>Your score is: <span id="score"></span></h2>
+        <p></p>
+        <img src="" alt="resultado" id="resultado">
+        <button class="navigation"><a href="../home.html">Go back to Home</a></button>
+    </section>
+    <aside>
+        <button type="button" id="previous" class="navigation">Previous</button>
+        <button type="button" id="next" class="navigation">Next</button>
+    </aside>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-auth.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../js/question.js"></script>
+</body>
+</html>
