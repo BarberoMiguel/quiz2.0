@@ -1,4 +1,3 @@
-
 const firebaseConfig = {
   apiKey: "AIzaSyBI9SwSOMuFb1rO_tv7oaI26_TFJi8ugXo",
   authDomain: "quiz-f6e00.firebaseapp.com",
@@ -47,7 +46,6 @@ function signIn() {
      });
 };
 
-
 // Cerrar sesión -------------------------------------------------------------------------------------
 const signOut = () => {
   let user = firebase.auth().currentUser;
@@ -61,7 +59,6 @@ const signOut = () => {
       console.log("Error: " + error);
     });
 };
-
 
 // Eventos -------------------------------------------------------------------------------------------
 loginButton.addEventListener("click", () => {
@@ -90,15 +87,27 @@ loginTopButton.addEventListener("click", () => {
   }
 });
 
-
 // Gráfica --------------------------------------------------------------------------------------------
-function createStats() {
-  // fetch
-  // String(new Date().getDate()).padStart(2, '0'); día actual
-  // new Date().toLocaleString('default', { month: 'long' }); mes actual
+let createStats = async function(id) {
+  let dates = [];
+  let scores = [];
 
-  let dates = ['10 - Oct', '11 - Oct', '12 - Oct', '13 - Oct', '14 - Oct'];
-  let scores = [4, 6, 9, 2, 5];
+  await db.collection('usuarios')
+    .doc(id)
+    .get()
+    .then(doc => {
+      let arr = doc.data().scores;
+      for (i = 0; i < arr.length; i++) {
+        dates.push(arr[i].date)
+        scores.push(arr[i].score)
+      }
+    })
+
+  if (window.innerWidth < 768) {
+    for (i = 0; i < dates.length; i++) {
+      dates[i] = dates[i].slice(0, -5);
+    }
+  }
 
   let data = {
     labels: dates,
@@ -136,11 +145,40 @@ function createStats() {
   new Chartist.Bar('.ct-chart', data, options);
 }
 
+// Auth state observers
+let authCheck = false;
+firebase.auth().onAuthStateChanged((user) => {
+if (user) {
+  authCheck = true;
+  let username = user.displayName;
+  db.collection('usuarios')
+    .get()
+    .then(querySnapshot => {
+      let id;
+      let scores;
+      querySnapshot.forEach(doc => {
+        if (doc.data().email == user.email) {
+          id = doc.id;
+          scores = doc.data().scores.length;
+        }
+      })
+      if (scores == 0) {
+        userHome_noScores(username);
+      } else {
+        userHome(username, id);
+      }
+    })
+} else {
+  authCheck = false;
+  defaultHome();
+}
+});
+
 let home = document.getElementById('home');
 
-function userHome() {
+async function userHome(username, id) {
   home.innerHTML = `<article id="info">
-  <h1>Welcome NAME</h1>
+  <h1>Welcome ${username}</h1>
   <p>Ready to try again?</p>
   <button id="start"><a href="./pages/quiz">Start</a></button>
   <p>Check out your last scores!</p>
@@ -148,7 +186,15 @@ function userHome() {
   <div class="ct-chart ct-perfect-fourth"></div>
   </div>
   </article>`
-  createStats();
+  createStats(id);
+}
+
+async function userHome_noScores(username) {
+  home.innerHTML = `<article id="info">
+  <h1>Welcome ${username}</h1>
+  <p>Play for the first time!</p>
+  <button id="start"><a href="./pages/quiz">Start</a></button>
+  </article>`
 }
 
 function defaultHome() {
@@ -161,25 +207,6 @@ function defaultHome() {
   <button id="loginButton">Log In</button>
   </article>`
 }
-
-// Auth state observers
-let authCheck = false;
-firebase.auth().onAuthStateChanged((user) => {
-if (user) {
-  authCheck = true;
-  setHome();
-} else {
-  authCheck = false;
-  defaultHome();
-}
-});
-
-async function getQuizQuestions() {
-  let questions = await fetch("https://opentdb.com/api.php?amount=10&category=23&difficulty=easy&type=multiple")
-  questions = await questions.json();
-  return questions;
-}
-
 
 // Crear/guardar usuario con base de datos
 

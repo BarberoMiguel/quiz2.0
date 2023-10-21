@@ -202,7 +202,7 @@ main {
 @media only screen
   and (max-device-width: 375px) {
     #info h1 {
-      margin-top: 2em;
+      margin-top: 3em;
     }
   }
 
