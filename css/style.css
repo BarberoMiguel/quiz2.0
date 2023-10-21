@@ -7,11 +7,11 @@
 
 /* Color palette */
 :root {
-  --sand: #fdb058;
-  --yellow: #ffbb1c;
-  --blue: #93d3df;
-  --linen: #fdefe4;
-  --wolf: #e0d3cc;
+  --peach: #FFDE9B;
+  --yellow: #FFBB1C;
+  --blue: #93D3DF;
+  --linen: #FDEFE4;
+  --wolf: #E0D3CC;
   --violet: #473950;
 }
 
@@ -19,6 +19,7 @@
 * {
   box-sizing: border-box;
   scroll-behavior: smooth;
+  font-size: 15px;
 }
 
 html {
@@ -26,12 +27,12 @@ html {
 }
 
 body {
-  background: url(../assets/fondo0.jpg) no-repeat center;
+  background-image: url(../assets/fondo0.jpg);
   background-attachment: fixed;
+  background-repeat: no-repeat;
   background-size: cover;
-  backdrop-filter: blur(3px);
   margin: 0;
-  height: 100%;
+  /* height: 100%; */
 }
 
 /* Header */
@@ -47,22 +48,31 @@ header {
 header h1 {
   color: var(--blue);
   text-shadow: 4px 4px 3px #0009;
-  font-size: 40px;
+  font-size: 2.5rem;
   margin: 0 10px 0;
 }
 
 #icons {
   display: flex;
   position: absolute;
+  align-content: center;
+  justify-content: center;
   right: 5px;
 }
 
 #icons img {
   margin: 0 5px;
-  height: 50px;
-  width: 50px;
+  height: 40px;
+  width: 40px;
   cursor: pointer;
 }
+
+#icons button {
+  padding: 3px 0 0;
+  background-color: transparent;
+  border: none;
+}
+
 
 /* Main */
 main {
@@ -70,7 +80,37 @@ main {
   display: flex;
   flex-flow: column wrap;
   justify-content: center;
-  align-items: center;
+  align-content: center;
+  height: 90.5vh;
+  backdrop-filter: blur(3px);
+}
+
+.sweetAlert {
+  font-family: "Gabarito", sans-serif;
+}
+
+.ct-chart {
+  height: 250px;
+  background-image: linear-gradient(#FFDE9B80, #FFDE9B90, #ffbb1c90, #ffbb1c80);
+}
+
+.ct-label, .ct-grid {
+  font-size: 1.1rem;
+  color: #000;
+  font-family: "Rubik", sans-serif;
+}
+
+.ct-series-a .ct-bar {
+  stroke: var(--violet);
+  stroke-width: 20px;
+  stroke-linecap: butt;
+}
+
+#chartBox {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  text-align: center;
 }
 
 #info {
@@ -82,8 +122,8 @@ main {
 
 #info h1 {
   font-family: "Gabarito", sans-serif;
-  margin: 20px 0 10px;
-  font-size: 70px;
+  margin: 0.5em 0 10px;
+  font-size: 4.5rem;
   letter-spacing: 5px;
   background: -webkit-linear-gradient(#fed58090, #ffb60a);
   background-clip: content-box;
@@ -93,7 +133,8 @@ main {
 }
 
 #info p {
-  font-size: 30px;
+  font-size: 2rem;
+  margin: 30px 0 10px;
   padding: 0 30px;
   color: var(--violet);
   text-shadow: 2px 2px 4px #ffb60a;
@@ -106,9 +147,19 @@ main {
   text-align: center;
 }
 
-#loginButton {
+#start {
+  align-self: center;
+}
+
+#start a {
+  color: var(--violet);
+  text-decoration: none;
+  font-size: 2.3rem;
+}
+
+#loginButton, #start {
   font-family: "Gabarito", sans-serif;
-  font-size: 2.3em;
+  font-size: 2.3rem;
   margin: 10px;
   width: 5.5em;
   height: 2em;
@@ -120,6 +171,122 @@ main {
   cursor: pointer;
 }
 
+/* Media queries */
+
+@media only screen
+  and (max-device-width: 375px) {
+    #info h1 {
+      margin-top: 3em;
+    }
+  }
+
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 1024px) {
+
+/* Header */
+header {
+  height: 7rem;
+}
+
+header h1 {
+  text-shadow: 0.5rem 0.5rem 0.5rem #0009;
+  font-size: 4.2rem;
+  margin: 0 1.3rem 0.1rem;
+}
+
+#icons {
+  right: 1em;
+}
+
+#icons img {
+  margin: 0 0.8rem;
+  height: 4rem;
+  width: 4rem;
+}
+
+/* Main */
+main {
+  height: 91.2vh;
+}
+
+.ct-chart {
+  margin-top: 2rem;
+  max-width: 90vw;
+  height: 17rem;
+}
+
+.ct-label, .ct-grid {
+  font-size: 1.5rem;
+}
+
+.ct-series-a .ct-bar {
+  stroke-width: 2.5rem;
+}
+
+#info h1 {
+  margin: 4rem 4rem 3rem;
+  font-size: 6rem;
+  letter-spacing: 0.5rem;
+  background: -webkit-linear-gradient(#fed580, #ffb60a);
+  background-clip: content-box;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0.5rem 0 0 var(--violet);
+}
+
+#info p {
+  font-size: 3rem;
+  margin: 1rem 0 1rem;
+  text-shadow: 0.3rem 0.3rem 0.3rem #ffb60a;
+}
+
+#info button {
+  margin-bottom: 5rem;
+}
+
+#login {
+  display: flex;
+  flex-flow: column wrap;
+  align-content: center;
+  text-align: center;
+}
+
+#start {
+  align-self: center;
+}
+
+#start a {
+  color: var(--violet);
+  text-decoration: none;
+  font-size: 2.3rem;
+}
+
+#loginButton, #start {
+  font-family: "Gabarito", sans-serif;
+  font-size: 2.3rem;
+  margin: 10px;
+  width: 5.5em;
+  height: 2em;
+  color: var(--violet);
+  background-image: linear-gradient(var(--blue), #6f9fa8);
+  border: 2px solid var(--violet);
+  text-shadow: 0 2px 5px #0005;
+  box-shadow: 0 5px 8px #0009;
+  cursor: pointer;
+}
+
+}
+
+@media only screen 
+  and (min-device-width: 1024px) 
+  and (max-device-width: 1600px) {
+
+  }
+
+/* User login pop up test */
+
+/*
 #loginPopUp {
   height: 16em;
   width: 20em;
@@ -154,41 +321,4 @@ main {
   width: fit-content;
   align-self: center;
 }
-
-#ranking {
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  margin: 80px 0 40px;
-  color: #253538;
-  /* box-shadow: 0 8px 15px #0008; */
-}
-
-#ranking table {
-  height: fit-content;
-  width: 300px;
-  background-image: linear-gradient(var(--blue), #6f9fa8);
-  border: 1px solid #47395090;
-  border-collapse: collapse;
-}
-
-#ranking caption {
-  font-size: 30px;
-  font-weight: bolder;
-  letter-spacing: 5px;
-  border: 2px solid #47395090;
-  background-color: var(--blue);
-  padding: 20px 0;
-}
-
-#ranking th {
-  font-size: 20px;
-  text-shadow: 2px 2px 2px #0002;
-}
-
-#ranking th,
-#ranking td {
-  letter-spacing: 2px;
-  border: 1px solid #47395090;
-  padding: 20px 20px;
-}
+*/
