@@ -1,130 +1,243 @@
 /* Fonts */
 @font-face {
-    font-family: "Gabarito", sans-serif;
-    font-family: "Rubik", sans-serif;
-    src: url(https://fonts.googleapis.com/css2?family=Gabarito&family=Rubik:wght@300&display=swap);
-  }
-  
-  :root {
-    --sand: #fdb058;
-    --yellow: #ffbb1c;
-    --blue: #93d3df;
-    --linen: #fdefe4;
-    --wolf: #e0d3cc;
-    --violet: #473950;
-  }
+  font-family: "Gabarito", sans-serif;
+  font-family: "Rubik", sans-serif;
+  src: url(https://fonts.googleapis.com/css2?family=Gabarito&family=Rubik:wght@300&display=swap);
+}
 
-  /* General rules */
-  * {
-    box-sizing: border-box;
-    scroll-behavior: smooth;
-    margin: 0;
-  }
-  
-  html {
-    font-size: 15px;
-  }
-  
-  body {
-    background: url(../assets/fondo3.jpg) no-repeat center;
-    background-attachment: fixed;
-    background-size: cover;
-    height: 100vh;
-    width: 100vw;
-  }
-  
-  /* Header */
-  header {
-    font-family: "Gabarito", sans-serif;
-    background-color: #4a6a7099;
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-    height: 80px;
-    width: 100%;
-  }
-  
-  header h1 {
-    color: var(--blue);
-    text-shadow: 4px 4px 3px #0009;
-    font-size: 40px;
-    margin: 0 10px 0;
-  }
-  
-  #icons {
-    display: flex;
-    position: absolute;
-    right: 5px;
-  }
-  
-  #icons img {
-    margin: 0 5px;
-    height: 50px;
-    width: 50px;
-    cursor: pointer;
-  }
-  
-  /* Main */
-  main {
-    font-family: "Rubik", sans-serif;
-    display: flex;
-    flex-flow: column wrap;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    padding: 0;
-  }
+/* Color palette */
+:root {
+  --sand: #fdb058;
+  --yellow: #ffbb1c;
+  --blue: #93d3df;
+  --linen: #fdefe4;
+  --wolf: #e0d3cc;
+  --violet: #473950;
+}
 
-  #ranking {
-    margin: 10vh 10vw;
-    font-weight: 1000;
-  }
+/* General rules */
+* {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  font-size: 15px;
+}
 
-  td, th {
-    text-align: center;
-    width: 20vw;
-  }
+html {
+  height: 100%;
+}
 
-  th {
-    padding: 20px;
-    font-size: 1.5rem;
-  }
+body {
+  background: url(../assets/fondo3.jpg) no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  background-size: cover;
+  height: 100%;
+  margin: 0;
+}
 
-  td {
-    font-size: 1.2rem;
-    text-shadow: 0 0 10px white, 0 0 10px white, 0 0 10px white;
-  }
+/* Header */
+header {
+  font-family: "Gabarito", sans-serif;
+  background-color: #4a6a7099;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  height: 80px;
+}
 
-  caption {
-    font-size: 2rem;
-    color: white;
-    text-shadow: 0 0 40px black, 0 0 40px black, 0 0 40px black;
-  }
+header h1 {
+  color: var(--blue);
+  text-shadow: 4px 4px 3px #0009;
+  font-size: 2.5rem;
+  margin: 0 10px 0;
+}
 
-  #rank {
-    color: black;
-    text-shadow: 0 0 20px yellow, 0 0 20px yellow, 0 0 20px yellow;
-  }
+#icons {
+  display: flex;
+  position: absolute;
+  align-content: center;
+  justify-content: center;
+  right: 5px;
+}
 
-  #user {
-    color: var(--blue);
-    text-shadow: 0 0 20px blue, 0 0 20px blue, 0 0 20px blue;
-  }
+#icons img {
+  margin: 0 5px;
+  height: 40px;
+  width: 40px;
+  cursor: pointer;
+}
 
-  #score {
-    color: black;
-    text-shadow: 0 0 20px red, 0 0 20px red, 0 0 20px red;
-  }
+#icons button {
+  padding: 3px 0 0;
+  background-color: transparent;
+  border: none;
+}
 
-@media screen and (min-width: 600px) and (max-width: 1200px) {
+#results {
+  margin-left: 3.5px;
+}
+
+/* Main */
+main {
+  font-family: "Rubik", sans-serif;
+  padding: 0;
+  min-height: calc(100vh - 80px);
+}
+
+table {
+  display: flex;
+  flex-flow: column wrap;
+  align-content: center;
+  justify-content: center;
+  margin-top: 25%;
+}
+
+caption {
+  font-size: 3.5rem;
+  margin-bottom: 2rem;
+  color: white;
+  text-shadow: 0 0 40px black, 0 0 40px black, 0 0 40px black;
+}
+
+th {
+  font-size: 1.5rem;
+  padding: 0 15px 20px;
+  text-align: center;
+}
+
+tbody {
+  max-height: 50vh;
+}
+
+tbody tr {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  padding: 0 13%;
+}
+
+td {
+  text-align: center;
+  font-size: 1.2rem;
+  padding: 0 0 15px 16px;
+  text-shadow: 0 0 10px white, 0 0 10px white, 0 0 10px white;
+}
+
+.sweetAlert {
+  font-family: "Gabarito", sans-serif;
+}
+
+#ranking {
+  font-weight: 1000;
+  text-align: center;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-content: center;
+}
+
+#rank {
+  color: black;
+  text-shadow: 0 0 20px yellow, 0 0 20px yellow, 0 0 20px yellow;
+}
+
+#user {
+  color: var(--blue);
+  text-shadow: 0 0 20px blue, 0 0 20px blue, 0 0 20px blue;
+}
+
+#score {
+  color: black;
+  text-shadow: 0 0 20px red, 0 0 20px red, 0 0 20px red;
+}
+
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 1024px) {
+
   html {
     font-size: 25px;
   }
+
+  /* Header */
+  header {
+    height: 7em;
+  }
+
+  header h1 {
+    font-size: 2.5rem;
+    margin-left: 0.7rem;
+  }
+
+  #icons {
+    right: 1em;
+  }
+  
+  #icons img {
+    margin: 0 0.8em;
+    height: 4em;
+    width: 4em;
+  }
+
+  /* Main */
+  main {
+    min-height: calc(100vh - 7em);
+  }
+
+  table {
+    margin-top: 5rem;
+  }
+
+  th {
+    padding: 0 1em 1em;
+  }
+
+  td {
+    padding: 0 0.2em 1em 1.4em
+  }
+
 }
 
 @media screen and (min-width: 1200px) {
   html {
-    font-size: 35px;
+    font-size: 25px;
   }
-}
+
+  /* Header */
+  header {
+    height: 7em;
+  }
+
+  header h1 {
+    font-size: 2.5rem;
+    margin-left: 0.8rem;
+  }
+
+  #icons {
+    right: 1.5em;
+  }
   
+  #icons img {
+    margin: 0 0.8em;
+    height: 4em;
+    width: 4em;
+  }
+
+  /* Main */
+  main {
+    min-height: calc(100vh - 7em);
+  }
+
+  table {
+    margin: 2em 0;
+  }
+
+  th {
+    padding: 0 1.5em 1.2em;
+  }
+
+  td {
+    padding: 0 0.1em 1em 1.2em
+  }
+
+}

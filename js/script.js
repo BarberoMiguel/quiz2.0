@@ -13,34 +13,7 @@ const db = firebase.firestore();// db representa mi BBDD // Inicia Firestore
 
 // Auth state observer -----------------------------------------------------------------------------------
 let authCheck = false;
-firebase.auth().onAuthStateChanged((user) => {
-if (user) {
-  authCheck = true;
-  let username = user.displayName;
-  db.collection('usuarios')
-    .get()
-    .then(querySnapshot => {
-      let id;
-      let scores;
-      querySnapshot.forEach(doc => {
-        if (doc.data().email == user.email) {
-          id = doc.id;
-          scores = doc.data().scores.length;
-        }
-      })
-      if (scores == 0) {
-        userHome_noScores(username);
-      } else {
-        userHome(username, id);
-      }
-    })
-} else {
-  authCheck = false;
-  defaultHome();
-}
-});
 
-const loginButton = document.getElementById('loginButton');
 const loginTopButton = document.getElementById('loginTop');
 const results = document.getElementById('results')
 const home = document.getElementById('home');
@@ -116,13 +89,11 @@ async function userHome_noScores(username) {
   </article>`
 }
 
-function defaultHome() {
+async function defaultHome() {
   home.innerHTML =`<article id="info">
   <h1>Welcome!</h1>
   <p>Test your knowledge on this 10 history questions quiz!</p>
   <p>Log in to get started!</p>
-  </article>
-  <article id="login">
   <button id="loginButton">Log In</button>
   </article>`
 }
@@ -191,10 +162,7 @@ let createStats = async function(id) {
 }
 
 // Eventos --------------------------------------------------------------------------------------------
-loginButton.addEventListener("click", () => {
-  console.log('test')
-  signIn()
-});
+
 
 loginTopButton.addEventListener("click", () => {
   if (authCheck == true) {
@@ -234,6 +202,36 @@ results.addEventListener('click', function(event) {
     })
   }
 })
+
+
+firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    authCheck = true;
+    let username = user.displayName;
+    db.collection('usuarios')
+      .get()
+      .then(querySnapshot => {
+        let id;
+        let scores;
+        querySnapshot.forEach(doc => {
+          if (doc.data().email == user.email) {
+            id = doc.id;
+            scores = doc.data().scores.length;
+          }
+        })
+        if (scores == 0) {
+          userHome_noScores(username);
+        } else {
+          userHome(username, id);
+        }
+      })
+  } else {
+    authCheck = false;
+    defaultHome();
+    const loginButton = document.getElementById('loginButton');
+    loginButton.addEventListener("click", signIn);
+  }
+});
 
 // Crear/guardar usuario con base de datos
 
