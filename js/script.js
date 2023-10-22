@@ -13,43 +13,9 @@ const db = firebase.firestore();// db representa mi BBDD // Inicia Firestore
 
 // Auth state observer -----------------------------------------------------------------------------------
 let authCheck = false;
-firebase.auth().onAuthStateChanged((user) => {
-if (user) {
-  authCheck = true;
-  let username = user.displayName;
-  db.collection('usuarios')
-    .get()
-    .then(querySnapshot => {
-      let id;
-      let scores;
-      querySnapshot.forEach(doc => {
-        if (doc.data().email == user.email) {
-          id = doc.id;
-          scores = doc.data().scores.length;
-        }
-      });
-      document.getElementById("home").classList.add("hide");
-      document.getElementById("username").innerHTML = `: ${username}`;
-      document.getElementById("menu").classList.remove("hide");
-      if (scores == 0) {
-        document.getElementById("testAgain").classList.add("hide");
-        document.getElementById("statistics").classList.add("hide");
-      } else {
-        document.getElementById("testNew").classList.add("hide");
-      }
-    })
-} else {
-  authCheck = false;
-}
-});
-
-const loginButton = document.getElementById('loginButton');
-const homeButton = document.getElementById('homeButton');
 const loginTopButton = document.getElementById('loginTop');
 const results = document.getElementById('results');
-const linkStatistics = document.getElementById('linkStatistics');
 const home = document.getElementById('home');
-let grafico = false;
 
 // Google Log In ------------------------------------------------------------------------------------
 const provider = new firebase.auth.GoogleAuthProvider();
@@ -99,6 +65,38 @@ const signOut = () => {
       console.log("Error: " + error);
     });
 };
+
+// Funciones -----------------------------------------------------------------------------------------
+
+async function userHome(username, id) {
+  home.innerHTML = `<article id="info">
+  <h1>Welcome ${username}</h1>
+  <p>Ready to try again?</p>
+  <button id="start"><a href="./pages/question.html">Start</a></button>
+  <p>Check out your last scores!</p>
+  <div id="chartBox">
+  <div class="ct-chart ct-perfect-fourth"></div>
+  </div>
+  </article>`
+  createStats(id);
+}
+
+async function userHome_noScores(username) {
+  home.innerHTML = `<article id="info">
+  <h1>Welcome ${username}</h1>
+  <p>Play for the first time!</p>
+  <button id="start"><a href="./pages/question.html">Start</a></button>
+  </article>`
+}
+
+async function defaultHome() {
+  home.innerHTML =`<article id="info">
+  <h1>Welcome!</h1>
+  <p>Test your knowledge on this 10 history questions quiz!</p>
+  <p>Log in to get started!</p>
+  <button id="loginButton">Log In</button>
+  </article>`
+}
 
 // Gráfica --------------------------------------------------------------------------------------------
 let createStats = async function(id) {
@@ -151,11 +149,6 @@ let createStats = async function(id) {
 }
 
 // Eventos --------------------------------------------------------------------------------------------
-loginButton.addEventListener("click", function() {
-  console.log('test');
-  signIn();
-});
-
 loginTopButton.addEventListener("click", () => {
   if (authCheck == true) {
     Swal.fire({
@@ -195,30 +188,33 @@ results.addEventListener('click', function(event) {
   }
 })
 
-homeButton.addEventListener('click', function() {
-  location.reload();
-});
-
-linkStatistics.addEventListener('click', function() {
-  let statistics = document.getElementById("showStatistics");
-  document.getElementById("menu").classList.add("hide");
-  statistics.classList.remove("hide");
-  grafico = true;
-  firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      db.collection('usuarios')
-        .get()
-        .then(querySnapshot => {
-          let id;
-          querySnapshot.forEach(doc => {
-            if (doc.data().email == user.email) {
-              id = doc.id;
-            }
-          });
-          createStats(id);
+firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    authCheck = true;
+    let username = user.displayName;
+    db.collection('usuarios')
+      .get()
+      .then(querySnapshot => {
+        let id;
+        let scores;
+        querySnapshot.forEach(doc => {
+          if (doc.data().email == user.email) {
+            id = doc.id;
+            scores = doc.data().scores.length;
+          }
         })
-    }
-  }); 
+        if (scores == 0) {
+          userHome_noScores(username);
+        } else {
+          userHome(username, id);
+        }
+      })
+  } else {
+    authCheck = false;
+    defaultHome();
+    const loginButton = document.getElementById('loginButton');
+    loginButton.addEventListener("click", signIn);
+  }
 });
 
 let mute = document.getElementById("muteButton");
@@ -228,28 +224,6 @@ mute.addEventListener("click", function() {
     audio.muted = false;
   } else {
     audio.muted = true;
-  }
-});
-
-
-//Resize
-window.addEventListener("resize", function () {
-  if (grafico) {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        db.collection('usuarios')
-          .get()
-          .then(querySnapshot => {
-            let id;
-            querySnapshot.forEach(doc => {
-              if (doc.data().email == user.email) {
-                id = doc.id;
-              }
-            });
-            createStats(id);
-          })
-      }
-    }); 
   }
 });
 
