@@ -13,9 +13,8 @@ const db = firebase.firestore();// db representa mi BBDD // Inicia Firestore
 
 // Auth state observer -----------------------------------------------------------------------------------
 let authCheck = false;
-
 const loginTopButton = document.getElementById('loginTop');
-const results = document.getElementById('results')
+const results = document.getElementById('results');
 const home = document.getElementById('home');
 
 // Google Log In ------------------------------------------------------------------------------------
@@ -59,7 +58,8 @@ const signOut = () => {
     .auth()
     .signOut()
     .then(() => {
-      console.log(user.email + ' signed out')
+      console.log(user.email + ' signed out');
+      location.reload();
     })
     .catch((error) => {
       console.log("Error: " + error);
@@ -121,8 +121,8 @@ let createStats = async function(id) {
     dates = dates.slice(Math.max(dates.length - 5, 0));
     scores = scores.slice(Math.max(scores.length - 5, 0));
   } else {
-    dates = dates.slice(Math.max(dates.length - 7, 0));
-    scores = scores.slice(Math.max(scores.length - 7, 0));
+    dates = dates.slice(Math.max(dates.length - 15, 0));
+    scores = scores.slice(Math.max(scores.length - 15, 0));
   }
 
   let data = {
@@ -131,39 +131,24 @@ let createStats = async function(id) {
   };
   
   var options = {
+     
+    height: '100%', 
+    width: '100%',
     high: 10,
-    height: 250,
-    fullWidth: true,
-    stretch: true,
     axisX: {
       position: 'start',
       showGrid: false,
-      labelOffset: {
-        x: 0,
-        y: -10
-      }
     },
     axisY: {
       onlyInteger: true,
-      labelOffset: {
-        x: 0,
-        y: 5
-      }
     },
-    chartPadding: {
-      top: 15,
-      right: 25,
-      bottom: 15,
-      left: 0
-    }
   };
 
-  new Chartist.Bar('.ct-chart', data, options);
+  const chart = new Chartist.Bar('.ct-chart', data, options);
+  chart.update();
 }
 
 // Eventos --------------------------------------------------------------------------------------------
-
-
 loginTopButton.addEventListener("click", () => {
   if (authCheck == true) {
     Swal.fire({
@@ -203,7 +188,6 @@ results.addEventListener('click', function(event) {
   }
 })
 
-
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     authCheck = true;
@@ -230,6 +214,16 @@ firebase.auth().onAuthStateChanged((user) => {
     defaultHome();
     const loginButton = document.getElementById('loginButton');
     loginButton.addEventListener("click", signIn);
+  }
+});
+
+let mute = document.getElementById("muteButton");
+let audio = document.getElementById("audio");
+mute.addEventListener("click", function() {
+  if (audio.muted) {
+    audio.muted = false;
+  } else {
+    audio.muted = true;
   }
 });
 
