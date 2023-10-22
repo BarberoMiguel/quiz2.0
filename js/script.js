@@ -13,8 +13,9 @@ const db = firebase.firestore();// db representa mi BBDD // Inicia Firestore
 
 // Auth state observer -----------------------------------------------------------------------------------
 let authCheck = false;
+
 const loginTopButton = document.getElementById('loginTop');
-const results = document.getElementById('results');
+const results = document.getElementById('results')
 const home = document.getElementById('home');
 
 // Google Log In ------------------------------------------------------------------------------------
@@ -58,8 +59,7 @@ const signOut = () => {
     .auth()
     .signOut()
     .then(() => {
-      console.log(user.email + ' signed out');
-      location.reload();
+      console.log(user.email + ' signed out')
     })
     .catch((error) => {
       console.log("Error: " + error);
@@ -69,7 +69,7 @@ const signOut = () => {
 // Funciones -----------------------------------------------------------------------------------------
 
 async function userHome(username, id) {
-  home.innerHTML = `<article id="info">
+  home.innerHTML = `<article id="info" class="fadeIn">
   <h1>Welcome ${username}</h1>
   <p>Ready to try again?</p>
   <button id="start"><a href="./pages/question.html">Start</a></button>
@@ -82,7 +82,7 @@ async function userHome(username, id) {
 }
 
 async function userHome_noScores(username) {
-  home.innerHTML = `<article id="info">
+  home.innerHTML = `<article id="info" class="fadeIn">
   <h1>Welcome ${username}</h1>
   <p>Play for the first time!</p>
   <button id="start"><a href="./pages/question.html">Start</a></button>
@@ -90,7 +90,7 @@ async function userHome_noScores(username) {
 }
 
 async function defaultHome() {
-  home.innerHTML =`<article id="info">
+  home.innerHTML =`<article id="info" class="fadeIn">
   <h1>Welcome!</h1>
   <p>Test your knowledge on this 10 history questions quiz!</p>
   <p>Log in to get started!</p>
@@ -121,8 +121,8 @@ let createStats = async function(id) {
     dates = dates.slice(Math.max(dates.length - 5, 0));
     scores = scores.slice(Math.max(scores.length - 5, 0));
   } else {
-    dates = dates.slice(Math.max(dates.length - 15, 0));
-    scores = scores.slice(Math.max(scores.length - 15, 0));
+    dates = dates.slice(Math.max(dates.length - 7, 0));
+    scores = scores.slice(Math.max(scores.length - 7, 0));
   }
 
   let data = {
@@ -131,24 +131,39 @@ let createStats = async function(id) {
   };
   
   var options = {
-     
-    height: '100%', 
-    width: '100%',
     high: 10,
+    height: 250,
+    fullWidth: true,
+    stretch: true,
     axisX: {
       position: 'start',
       showGrid: false,
+      labelOffset: {
+        x: 0,
+        y: -10
+      }
     },
     axisY: {
       onlyInteger: true,
+      labelOffset: {
+        x: 0,
+        y: 5
+      }
     },
+    chartPadding: {
+      top: 15,
+      right: 25,
+      bottom: 15,
+      left: 0
+    }
   };
 
-  const chart = new Chartist.Bar('.ct-chart', data, options);
-  chart.update();
+  new Chartist.Bar('.ct-chart', data, options);
 }
 
 // Eventos --------------------------------------------------------------------------------------------
+
+
 loginTopButton.addEventListener("click", () => {
   if (authCheck == true) {
     Swal.fire({
@@ -187,6 +202,7 @@ results.addEventListener('click', function(event) {
     })
   }
 })
+
 
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {

@@ -15,20 +15,27 @@
   --violet: #473950;
 }
 
+/* Keyframes */
+@keyframes fadeIn {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
 /* General rules */
 * {
   box-sizing: border-box;
   scroll-behavior: smooth;
+  font-size: 15px;
 }
 
 html {
   height: 100%;
-  font-size: 10px;
 }
 
 body {
-  background: url(../assets/fondo0.jpg) no-repeat center;
+  background-image: url(../assets/fondo0.jpg);
   background-attachment: fixed;
+  background-repeat: no-repeat;
   background-size: cover;
   margin: 0;
   height: 100%;
@@ -89,13 +96,20 @@ main {
   backdrop-filter: blur(3px);
 }
 
+.fadeIn {
+  animation: fadeIn 2s;
+  -webkit-animation: fadeIn 2s;
+  -moz-animation: fadeIn 2s;
+  -o-animation: fadeIn 2s;
+  -ms-animation: fadeIn 2s;
+}
+
 .sweetAlert {
   font-family: "Gabarito", sans-serif;
 }
 
 .ct-chart {
-  height: 50vh;
-  width: 80%;
+  height: 250px;
   background-image: linear-gradient(#FFDE9B80, #FFDE9B90, #ffbb1c90, #ffbb1c80);
 }
 
@@ -106,7 +120,7 @@ main {
 }
 
 .ct-series-a .ct-bar {
-  stroke: rgb(0, 140, 255);
+  stroke: var(--violet);
   stroke-width: 20px;
   stroke-linecap: butt;
 }
@@ -118,60 +132,16 @@ main {
   text-align: center;
 }
 
-.info {
-  margin: 80px 0 0 0;
-  padding: 0;
-  width: 80vw;
+#info {
   display: flex;
   flex-flow: column wrap;
-  align-items: center;
   text-align: center;
-  backdrop-filter: blur(3px);
-  border-radius: 20px;
+  margin: 10px auto;
 }
 
-.box {
-  width: 350px;
-  height: 200px;
-  display: flex;
-  flex-flow: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  backdrop-filter: blur(3px);
-  border-radius: 20px;
-  border: 1px solid black;
-  margin: 20px;
-  overflow: hidden;
-}
-
-.container {
-  width: 100vw;
-  height: 100%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-}
-
-#showStatistics {
-  width: 100vw;
-  height: 100%;
-}
-
-.box img {
-  width: 60%;
-}
-
-.box img:hover {
-  cursor: pointer;
-}
-
-.info h1, #showStatistics h1 {
-  margin: 0;
-  text-align: center;
+#info h1 {
   font-family: "Gabarito", sans-serif;
+  margin: 0.5em 0 10px;
   font-size: 4.5rem;
   letter-spacing: 5px;
   background: -webkit-linear-gradient(#fed58090, #ffb60a);
@@ -181,22 +151,8 @@ main {
   text-shadow: 4px 0 0 var(--violet);
 }
 
-#menu span, #menu h2 {
-  margin: 0;
-  padding: 0;
-  background: -webkit-linear-gradient(#fed58090, #ffb60a);
-  background-clip: content-box;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-family: "Gabarito", sans-serif;
-  text-align: center;
-  font-size: 3rem;
-  letter-spacing: 5px;
-  text-shadow: 4px 0 0 var(--violet);
-}
-
-.info p, #menu p {
-  font-size: 1.5rem;
+#info p {
+  font-size: 2rem;
   margin: 30px 0 10px;
   padding: 0 30px;
   color: var(--violet);
@@ -209,7 +165,7 @@ main {
   font-size: 2.3rem;
 }
 
-#loginButton, .start {
+#loginButton, #start {
   font-family: "Gabarito", sans-serif;
   font-size: 2.3rem;
   margin: 10px;
@@ -225,18 +181,19 @@ main {
 }
 
 /* Media queries */
+
 @media only screen 
   and (min-device-width: 768px) 
   and (max-device-width: 1024px) {
 
- Header 
+/* Header */
 header {
   height: 7rem;
 }
 
 header h1 {
   text-shadow: 0.5rem 0.5rem 0.5rem #0009;
-  font-size: 1.5rem;
+  font-size: 4.2rem;
   margin: 0 1.3rem 0.1rem;
 }
 
@@ -250,7 +207,7 @@ header h1 {
   width: 4rem;
 }
 
- Main 
+/* Main */
 main {
   min-height: calc(100vh - 7rem)
 }
@@ -317,7 +274,6 @@ header h1 {
 #icons {
   right: 1.5em;
 }
-*/
 
 #icons img {
   margin: 0 0.8rem;
