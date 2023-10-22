@@ -66,3 +66,13 @@ loginTopButton.addEventListener("click", () => {
       } 
     })
 });
+
+let mute = document.getElementById("muteButton");
+let audio = document.getElementById("audio");
+mute.addEventListener("click", function() {
+  if (audio.muted) {
+    audio.muted = false;
+  } else {
+    audio.muted = true;
+  }
+});

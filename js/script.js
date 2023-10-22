@@ -27,23 +27,29 @@ if (user) {
           id = doc.id;
           scores = doc.data().scores.length;
         }
-      })
+      });
+      document.getElementById("home").classList.add("hide");
+      document.getElementById("username").innerHTML = `: ${username}`;
+      document.getElementById("menu").classList.remove("hide");
       if (scores == 0) {
-        userHome_noScores(username);
+        document.getElementById("testAgain").classList.add("hide");
+        document.getElementById("statistics").classList.add("hide");
       } else {
-        userHome(username, id);
+        document.getElementById("testNew").classList.add("hide");
       }
     })
 } else {
   authCheck = false;
-  defaultHome();
 }
 });
 
 const loginButton = document.getElementById('loginButton');
+const homeButton = document.getElementById('homeButton');
 const loginTopButton = document.getElementById('loginTop');
-const results = document.getElementById('results')
+const results = document.getElementById('results');
+const linkStatistics = document.getElementById('linkStatistics');
 const home = document.getElementById('home');
+let grafico = false;
 
 // Google Log In ------------------------------------------------------------------------------------
 const provider = new firebase.auth.GoogleAuthProvider();
@@ -86,46 +92,13 @@ const signOut = () => {
     .auth()
     .signOut()
     .then(() => {
-      console.log(user.email + ' signed out')
+      console.log(user.email + ' signed out');
+      location.reload();
     })
     .catch((error) => {
       console.log("Error: " + error);
     });
 };
-
-// Funciones -----------------------------------------------------------------------------------------
-
-async function userHome(username, id) {
-  home.innerHTML = `<article id="info">
-  <h1>Welcome ${username}</h1>
-  <p>Ready to try again?</p>
-  <button id="start"><a href="./pages/question.html">Start</a></button>
-  <p>Check out your last scores!</p>
-  <div id="chartBox">
-  <div class="ct-chart ct-perfect-fourth"></div>
-  </div>
-  </article>`
-  createStats(id);
-}
-
-async function userHome_noScores(username) {
-  home.innerHTML = `<article id="info">
-  <h1>Welcome ${username}</h1>
-  <p>Play for the first time!</p>
-  <button id="start"><a href="./pages/question.html">Start</a></button>
-  </article>`
-}
-
-function defaultHome() {
-  home.innerHTML =`<article id="info">
-  <h1>Welcome!</h1>
-  <p>Test your knowledge on this 10 history questions quiz!</p>
-  <p>Log in to get started!</p>
-  </article>
-  <article id="login">
-  <button id="loginButton">Log In</button>
-  </article>`
-}
 
 // Gráfica --------------------------------------------------------------------------------------------
 let createStats = async function(id) {
@@ -150,8 +123,8 @@ let createStats = async function(id) {
     dates = dates.slice(Math.max(dates.length - 5, 0));
     scores = scores.slice(Math.max(scores.length - 5, 0));
   } else {
-    dates = dates.slice(Math.max(dates.length - 7, 0));
-    scores = scores.slice(Math.max(scores.length - 7, 0));
+    dates = dates.slice(Math.max(dates.length - 15, 0));
+    scores = scores.slice(Math.max(scores.length - 15, 0));
   }
 
   let data = {
@@ -160,40 +133,27 @@ let createStats = async function(id) {
   };
   
   var options = {
+     
+    height: '100%', 
+    width: '100%',
     high: 10,
-    height: 250,
-    fullWidth: true,
-    stretch: true,
     axisX: {
       position: 'start',
       showGrid: false,
-      labelOffset: {
-        x: 0,
-        y: -10
-      }
     },
     axisY: {
       onlyInteger: true,
-      labelOffset: {
-        x: 0,
-        y: 5
-      }
     },
-    chartPadding: {
-      top: 15,
-      right: 25,
-      bottom: 15,
-      left: 0
-    }
   };
 
-  new Chartist.Bar('.ct-chart', data, options);
+  const chart = new Chartist.Bar('.ct-chart', data, options);
+  chart.update();
 }
 
 // Eventos --------------------------------------------------------------------------------------------
-loginButton.addEventListener("click", () => {
-  console.log('test')
-  signIn()
+loginButton.addEventListener("click", function() {
+  console.log('test');
+  signIn();
 });
 
 loginTopButton.addEventListener("click", () => {
@@ -234,6 +194,64 @@ results.addEventListener('click', function(event) {
     })
   }
 })
+
+homeButton.addEventListener('click', function() {
+  location.reload();
+});
+
+linkStatistics.addEventListener('click', function() {
+  let statistics = document.getElementById("showStatistics");
+  document.getElementById("menu").classList.add("hide");
+  statistics.classList.remove("hide");
+  grafico = true;
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      db.collection('usuarios')
+        .get()
+        .then(querySnapshot => {
+          let id;
+          querySnapshot.forEach(doc => {
+            if (doc.data().email == user.email) {
+              id = doc.id;
+            }
+          });
+          createStats(id);
+        })
+    }
+  }); 
+});
+
+let mute = document.getElementById("muteButton");
+let audio = document.getElementById("audio");
+mute.addEventListener("click", function() {
+  if (audio.muted) {
+    audio.muted = false;
+  } else {
+    audio.muted = true;
+  }
+});
+
+
+//Resize
+window.addEventListener("resize", function () {
+  if (grafico) {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        db.collection('usuarios')
+          .get()
+          .then(querySnapshot => {
+            let id;
+            querySnapshot.forEach(doc => {
+              if (doc.data().email == user.email) {
+                id = doc.id;
+              }
+            });
+            createStats(id);
+          })
+      }
+    }); 
+  }
+});
 
 // Crear/guardar usuario con base de datos
 
