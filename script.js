@@ -11,7 +11,7 @@ const firebaseConfig = {
   
   const db = firebase.firestore();// db representa mi BBDD // Inicia Firestore
 
-if (window.location.pathname == "./home.html") {
+if (document.title == "Home") {
     // Auth state observer -----------------------------------------------------------------------------------
     let authCheck = false;
 
@@ -245,12 +245,13 @@ if (window.location.pathname == "./home.html") {
     });
 }
 
-if (window.location.pathname == "./pages/question.html") {
+
+if (document.title == "Question") {
     const provider = new firebase.auth.GoogleAuthProvider();
     const auth = firebase.auth();
     firebase.auth().onAuthStateChanged((user) => {
         if (!user) {
-        window.location.href = "../home.html";
+        window.location.href = "./home.html";
         }});
 
     let answers = [];
@@ -497,12 +498,12 @@ if (window.location.pathname == "./pages/question.html") {
 };
 
 
-if (window.location.pathname == "./pages/results.html") {
+if (document.title == "Results") {
     const provider = new firebase.auth.GoogleAuthProvider();
     const auth = firebase.auth();
     firebase.auth().onAuthStateChanged((user) => {
         if (!user) {
-        window.location.href = "../home.html";
+        window.location.href = "./home.html";
         }});
 
     let bodyTable = document.querySelector("tbody");
