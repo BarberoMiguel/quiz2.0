@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results</title>
+    <link rel="stylesheet" href="../css/results.css">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Gabarito&family=Rubik:wght@300&display=swap"
+      rel="stylesheet"/>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../assets/favicon.png" type="image/x-icon"/>
+</head>
+<body>
+  <header>
+    <h1>Quiz 2.0</h1>
+    <section id="icons">
+      <button><img src="../assets/mute.png" alt="Mute icon" id="muteButton"/></button><!-- Mute button -->
+      <a href="../home.html"><img src="../assets/home.png" alt="Home icon" id="home"/></a><!-- Home button -->
+      <a href="#" id="results"><img src="../assets/results.png" alt="Results icon"></a>
+      <button><img src="../assets/login.png" alt="Login icon" id="loginTop"/></button><!-- //Login -->
+    </section>
+  </header>
+  <main>
+    <section id="ranking">
+      <table>
+        <caption>
+          Ranking
+        </caption>
+        <thead>
+          <tr>
+            <th id="rank">Ranking:</th>
+            <th id="user">Username:</th>
+            <th id="score">Score:</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        </tbody>
+      </table>
+    </section>
+  </main>
+  <audio class="hide" id="audio" src="../assets/audio/quiz.mp3" autoplay loop></audio>
+
+      <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-auth.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../js/results.js"></script>
+</body>
+</html>
