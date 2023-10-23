@@ -35,8 +35,9 @@ function mezclarArray(array) {
     }
 }
 
+let questions;
 async function drawQuestions() {
-    let questions = await getQuizQuestions();
+    questions = await getQuizQuestions();
     for (let i = 0; i < numberOfQuestions; i++) {
         document.getElementById(`label${i+1}`).innerHTML = questions[i].question;
         let array = questions[i].incorrect_answers;
@@ -240,6 +241,21 @@ submit.addEventListener("submit", function(event) {
         } else {
             text.innerHTML = "Looks like you should study more";
             imageUrl.src = "../assets/gifs/0-4.gif";
+        }
+        for (let i = 0; i < questions.length; i++) {
+            let color;
+            if (questions[i].correct_answer == respuestas[i]) {
+                color = "color3";
+            } else {
+                color = "color1"
+            }
+            document.getElementById("correctResults").innerHTML += `
+            <tr class=${color}>
+                <td class="questionTable">${questions[i].question}</td>
+                <td>${respuestas[i]}</td>
+                <td>${questions[i].correct_answer}</td>
+            </tr>`;
+            
         }
     }
 })
