@@ -19,6 +19,6 @@ Made by [**Miguel Barbero**](https://github.com/BarberoMiguel) and [**Gregorio T
 ## Try your best! ##
 
 Let's see how high you can get in the ranking and we hope you enjoy it!
-[**GitHub Page**](https://github.io)
+[**GitHub Page**](https://barberomiguel.github.io/quiz2.0/home.html)
 
 ![](rank.jpeg)
