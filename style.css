@@ -167,6 +167,11 @@ main {
   padding: 0;
 }
 
+#resultsMain tr, #resultsMain td {
+  padding: 0;
+  margin: 0;
+}
+
 /* Home */
 
 .fadeIn {
@@ -407,6 +412,13 @@ label {
     text-align: center;
 }
 
+#resultadoSection h1,
+#resultadoSection span,
+#resultadoSection h2,
+#resultadoSection p{
+  margin: 0;
+}
+
 /* Results */
 #resultsMain table {
   margin-top: 25px;
@@ -421,11 +433,23 @@ label {
 }
 
 #resultsMain th {
-  font-size: 1.5rem;
+  font-size: 5vw;
   text-align: center;
   width: 20vw;
   padding: 15px 0;
   border: 3px solid transparent;
+}
+
+#resultsMain tbody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#resultsMain thead {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #resultsMain td {
@@ -572,6 +596,7 @@ main {
 #resultadoSection h2,
 #resultadoSection p{
   font-size: 2.5rem;
+  margin: 0;
 }
 #correctResults{
   font-size: 1.4rem;
@@ -596,8 +621,7 @@ main {
 }
 
 @media only screen 
-  and (min-device-width: 1024px) 
-  and (max-device-width: 1600px) {
+  and (min-device-width: 1024px) {
 
 /* Header */
 header {
@@ -708,6 +732,7 @@ main {
 #resultadoSection h2,
 #resultadoSection p{
   font-size: 2.5rem;
+  margin: 0;
 }
 
 /* Results */

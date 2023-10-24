@@ -462,7 +462,7 @@ if (document.title == "Question") {
             });
 
             //mostrar datos personalizados
-            document.getElementById("score").innerHTML = `${score} / ${numberOfQuestions}`;
+            document.getElementById("score1").innerHTML = `${score} / ${numberOfQuestions}`;
             let text = document.querySelector(".resultado p");
             let imageUrl = document.getElementById("resultado");
             if (score/numberOfQuestions == 1) {
